@@ -45,7 +45,52 @@
                     </div>
             </div>
 
+            
 
+            
+
+            <!-- Search for prompt by id -->
+            <div class="container collapse" id="searchByIdSection">
+                <div class="row p-5">
+
+                    <div class="col-sm">
+                        <label for="searchId">Search by ID</label>
+                        <input type="text" class="form-control" id="searchId" name="search_id" placeholder="Enter ID">
+                    </div>
+
+                    <div class="col-sm">
+                        <button type="button" class="btn btn-primary" id="searchButton">Search</button>
+                    </div>
+
+                </div>
+            </div>
+
+            <script>
+                $(document).ready(function() {
+                    $('#searchButton').click(function() {
+                        let searchId = $('#searchId').val();
+
+                        //input validation using regex (id can a number between 1 and 999999)
+                        if (!/^[1-9]\d{0,5}$/.test(searchId)) {
+                            alert("Please enter a valid ID (1-999999)");
+                            return;
+                        }
+
+                        $.ajax({
+                            url: '/prompt/' + searchId,
+                            type: 'GET',
+                            success: function(data) {
+                                console.log('Success:', data);
+                                let promptHtml = jsonToHtmlTable(data);
+                                $('#results').html(promptHtml);
+                            },
+                            error: function(xhr, status, error) {
+                                $('#results').html("Error: " + error);
+                            }
+                        });
+                    });
+                });
+            </script>
 
             <!-- Add new prompt form will be called by a jQuery POST Request -->
             <!-- Prompt database JSON format (need to collect data for each of these fields except id. parent_prompt_id is not included right now, will be included when inheriting a prompt):
@@ -93,7 +138,10 @@
             <script>
                 $(document).ready(function() {
                     $('#submitForm').click(function() {
-                        var formData = {
+
+
+
+                        let formData = {
                             name: $('#name').val(),
                             prompt_content: $('#promptContent').val(),
                             prompt_variables: $('#promptVariables').val(),
@@ -110,43 +158,6 @@
                             success: function(data) {
                                 console.log('Success:', data);
                                 alert('Prompt added successfully');
-                            },
-                            error: function(xhr, status, error) {
-                                $('#results').html("Error: " + error);
-                            }
-                        });
-                    });
-                });
-            </script>
-
-            <!-- Search for prompt by id -->
-            <div class="container collapse" id="searchByIdSection">
-                <div class="row p-5">
-
-                    <div class="col-sm">
-                        <label for="searchId">Search by ID</label>
-                        <input type="text" class="form-control" id="searchId" name="search_id" placeholder="Enter ID">
-                    </div>
-
-                    <div class="col-sm">
-                        <button type="button" class="btn btn-primary" id="searchButton">Search</button>
-                    </div>
-
-                </div>
-            </div>
-
-            <script>
-                $(document).ready(function() {
-                    $('#searchButton').click(function() {
-                        var searchId = $('#searchId').val();
-
-                        $.ajax({
-                            url: '/prompt/' + searchId,
-                            type: 'GET',
-                            success: function(data) {
-                                console.log('Success:', data);
-                                var promptHtml = jsonToHtmlTable(data);
-                                $('#results').html(promptHtml);
                             },
                             error: function(xhr, status, error) {
                                 $('#results').html("Error: " + error);
@@ -175,7 +186,7 @@
             <script>
                 $(document).ready(function() {
                     $('#deleteButton').click(function() {
-                        var deleteId = $('#deleteId').val();
+                        let deleteId = $('#deleteId').val();
 
                         $.ajax({
                             url: '/prompt/' + deleteId,
@@ -233,19 +244,19 @@
                 //If the field is empty or null, do not update that field
                 $(document).ready(function() {
                     $('#updateButton').click(function() {
-                        var updateId = $('#updateId').val();
+                        let updateId = $('#updateId').val();
 
                         if (updateId === "") {
                             alert("Please enter an ID to update");
                             return;
                         }
 
-                        var updateName = $('#updateName').val();
-                        var updatePromptContent = $('#updatePromptContent').val();
-                        var updatePromptVariables = $('#updatePromptVariables').val();
-                        var updateDesignedFor = $('#updateDesignedFor').val();
+                        let updateName = $('#updateName').val();
+                        let updatePromptContent = $('#updatePromptContent').val();
+                        let updatePromptVariables = $('#updatePromptVariables').val();
+                        let updateDesignedFor = $('#updateDesignedFor').val();
 
-                        var formData = {
+                        let formData = {
                             name: updateName,
                             prompt_content: updatePromptContent,
                             prompt_variables: updatePromptVariables,
@@ -344,7 +355,7 @@
                     type: 'GET',
                     success: function(data) {
                         console.log(data);
-                        var promptsHtml = jsonToHtmlTable(data)
+                        let promptsHtml = jsonToHtmlTable(data)
                         $('#results').html(promptsHtml);
                     },
                     error: function(xhr, status, error) {
