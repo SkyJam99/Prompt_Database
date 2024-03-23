@@ -64,7 +64,7 @@ def response_to_html(response):
 #CRUD operations
     
 #Get All prompts
-def get_all_prompts():
+def get_all_prompts_db():
     getConnection()
     response = supabase.table('prompts').select("*").execute()
     
@@ -76,7 +76,7 @@ def get_all_prompts():
 
 
 #Get Prompt by id
-def get_prompt_by_id(id: int):
+def get_prompt_by_id_db(id: int):
     getConnection()
     response = supabase.table('prompts').select("*").eq('id', id).execute()
 
@@ -88,7 +88,7 @@ def get_prompt_by_id(id: int):
 
 
 #Create Prompt
-def create_prompt(prompt: dict):
+def create_prompt_db(prompt: dict):
     getConnection()
     response = supabase.table('prompts').insert(prompt).execute()
 
@@ -99,7 +99,7 @@ def create_prompt(prompt: dict):
     return response.data
 
 #Update Prompt
-def update_prompt(id: int, prompt: dict):
+def update_prompt_db(id: int, prompt: dict):
     getConnection()
     response = supabase.table('prompts').update(prompt).eq('id', id).execute()
 
@@ -110,7 +110,7 @@ def update_prompt(id: int, prompt: dict):
     return response.data
 
 #Delete Prompt
-def delete_prompt(id):
+def delete_prompt_db(id):
     getConnection()
     response = supabase.table('prompts').delete().eq('id', id).execute()
 
