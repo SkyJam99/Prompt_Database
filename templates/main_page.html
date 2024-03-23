@@ -39,41 +39,33 @@
             -->
             <div class="container">
                 <div class="row">
-                    <form id="promptForm" class="form-inline">
+                    
 
-                        <div class="col-sm-2">
-                            <div class="form-group">
-                                <label for="name">Name</label>
-                                <input type="text" class="form-control" id="name" name="name" placeholder="Enter name" required>
-                            </div>
+                        <div class="col-sm">
+                            <label for="name">Name</label>
+                            <input type="text" class="form-control" id="name" name="name" placeholder="Enter name" required>
                         </div>
 
-                        <div class="col-sm-2">
-                            <div class="form-group">
-                                <label for="promptContent">Prompt Content</label>
-                                <textarea class="form-control" id="promptContent" name="prompt_content" rows="1" placeholder="Enter prompt content" required></textarea>
-                            </div>
+                        <div class="col-sm">
+                            <label for="promptContent">Prompt Content</label>
+                            <textarea class="form-control" id="promptContent" name="prompt_content" rows="1" placeholder="Enter prompt content" required></textarea>
                         </div>
 
-                        <div class="col-sm-2">
-                            <div class="form-group">
-                                <label for="promptVariables">Prompt Variables</label>
-                                <input type="text" class="form-control" id="promptVariables" name="prompt_variables" placeholder="Enter prompt variables" required>
-                            </div>
+                        <div class="col-sm">
+                            <label for="promptVariables">Prompt Variables</label>
+                            <input type="text" class="form-control" id="promptVariables" name="prompt_variables" placeholder="Enter prompt variables" required>
                         </div>
 
-                        <div class="col-sm-2">
-                            <div class="form-group">
-                                <label for="designedFor">Designed For</label>
-                                <input type="text" class="form-control" id="designedFor" name="designed_for" placeholder="Enter designed for" required>
-                            </div>
+                        <div class="col-sm">
+                            <label for="designedFor">Designed For</label>
+                            <input type="text" class="form-control" id="designedFor" name="designed_for" placeholder="Enter designed for" required>
                         </div>
 
-                        <div class="col-sm-2">
+                        <div class="col-sm">
                             <button type="button" class="btn btn-primary" id="submitForm">Submit</button>
                         </div>
 
-                    </form>
+                    
                 </div>
             </div>
 
@@ -107,11 +99,51 @@
                 });
             </script>
 
+            <!-- Search for prompt by id -->
+            <div class="container">
+                <div class="row p-5">
+
+                    <div class="col-sm">
+                        <label for="searchId">Search by ID</label>
+                        <input type="text" class="form-control" id="searchId" name="search_id" placeholder="Enter ID" required>
+                    </div>
+
+                    <div class="col-sm">
+                        <button type="button" class="btn btn-primary" id="searchButton">Search</button>
+                    </div>
+
+                </div>
+            </div>
+
+            <script>
+                $(document).ready(function() {
+                    $('#searchButton').click(function() {
+                        var searchId = $('#searchId').val();
+
+                        $.ajax({
+                            url: '/prompt/' + searchId,
+                            type: 'GET',
+                            success: function(data) {
+                                console.log('Success:', data);
+                                var promptHtml = jsonToHtmlTable([data]);
+                                $('#results').html(promptHtml);
+                            },
+                            error: function(error) {
+                                console.error('Error:', error);
+                                alert('Error searching for prompt');
+                            }
+                        });
+                    });
+                });
+            </script>
 
 
-            <div class="container-fluid">
-                <div class="row">
-                    <div class="col-sm-12">
+            <!-- Display all prompts in a table -->
+
+
+            <div class="container">
+                <div class="row p-5">
+                    <div class="col-sm">
                         <button id="refreshData" class="btn btn-info">Refresh Prompts</button>
                         <div id='results'>
 
@@ -119,6 +151,10 @@
                     </div>
                 </div>
             </div>
+
+            
+
+
         </div>
 
         <script>
@@ -129,13 +165,13 @@
                 }
 
                 // Start building the table
-                let tableHtml = "<table border='1'><thead><tr>";
+                let tableHtml = "<table class='table table-hover table-primary table-bordered table-striped'><tr>";
 
                 // Extract headings (keys of the JSON objects)
                 Object.keys(jsonData[0]).forEach(key => {
                     tableHtml += `<th>${key}</th>`;
                 });
-                tableHtml += "</tr></thead><tbody>";
+                tableHtml += "</tr>";
 
                 // Populate the table rows with the JSON data
                 jsonData.forEach(item => {
@@ -147,7 +183,7 @@
                 });
 
                 // Close the table tags
-                tableHtml += "</tbody></table>";
+                tableHtml += "</table>";
 
                 return tableHtml;
             }
