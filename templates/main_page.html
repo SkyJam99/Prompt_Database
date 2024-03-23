@@ -40,55 +40,62 @@
         </div>
 
         <script>
-            $(document).ready(function() {
-                getAllPrompts();
-            });
+            function jsonToHtmlTable(jsonData) {
+                // Check if jsonData is empty
+                if (jsonData.length === 0) {
+                    return "<p>No data available</p>";
+                }
 
-            // Refresh button
-            $("#refreshData").click(function() {
-                getAllPrompts();
-            });
+                // Start building the table
+                let tableHtml = "<table border='1'><thead><tr>";
+
+                // Extract headings (keys of the JSON objects)
+                Object.keys(jsonData[0]).forEach(key => {
+                    tableHtml += `<th>${key}</th>`;
+                });
+                tableHtml += "</tr></thead><tbody>";
+
+                // Populate the table rows with the JSON data
+                jsonData.forEach(item => {
+                    tableHtml += "<tr>";
+                    Object.values(item).forEach(value => {
+                        tableHtml += `<td>${value}</td>`;
+                    });
+                    tableHtml += "</tr>";
+                });
+
+                // Close the table tags
+                tableHtml += "</tbody></table>";
+
+                return tableHtml;
+            }
+
 
             function getAllPrompts() {
+                console.log("Trying to get all prompts");
                 $.ajax({
                     url: '/prompt',
                     type: 'GET',
                     success: function(data) {
                         console.log(data);
-                        $('#results').html(data);
+                        var promptsHtml = jsonToHtmlTable(data)
+                        $('#results').html(promptsHtml);
                     },
                     error: function(xhr, status, error) {
                         $('#results').html("Error: " + error);
                     }
                 });
             }
-                // Create prompt
-                /*
-                $("#createPromptForm").submit(function(e) {
-                    e.preventDefault();
-                    var promptText = $("#newPromptText").val();
-                    $.post("/createPrompt", {text: promptText}, function(data) {
-                        alert("Prompt added!");
-                        $("#newPromptText").val(""); // Clear input field
-                        refreshData(); // Refresh the list of prompts
-                    });
-                });
 
-                
+            $(document).ready(function() {
+                getAllPrompts();
+            });
 
-                // Function to refresh data
-                function refreshData() {
-                    $.get("/readPrompt", function(data) {
-                        alert("refresh");
-                        $('#results').html(data);
-                    });
-                }
-
-                // Initial data load
-                refreshData();
-            */
-            
-            
+            // Refresh button
+            $("#refreshData").click(function() {
+                $('#results').html('')
+                getAllPrompts();
+            });
         </script>
     </body>
 </html>
