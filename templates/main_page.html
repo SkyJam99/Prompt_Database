@@ -43,22 +43,22 @@
 
                         <div class="col-sm">
                             <label for="name">Name</label>
-                            <input type="text" class="form-control" id="name" name="name" placeholder="Enter name" required>
+                            <input type="text" class="form-control" id="name" name="name" placeholder="Enter name">
                         </div>
 
                         <div class="col-sm">
                             <label for="promptContent">Prompt Content</label>
-                            <textarea class="form-control" id="promptContent" name="prompt_content" rows="1" placeholder="Enter prompt content" required></textarea>
+                            <textarea class="form-control" id="promptContent" name="prompt_content" rows="1" placeholder="Enter prompt content"></textarea>
                         </div>
 
                         <div class="col-sm">
                             <label for="promptVariables">Prompt Variables</label>
-                            <input type="text" class="form-control" id="promptVariables" name="prompt_variables" placeholder="Enter prompt variables" required>
+                            <input type="text" class="form-control" id="promptVariables" name="prompt_variables" placeholder="Enter prompt variables">
                         </div>
 
                         <div class="col-sm">
                             <label for="designedFor">Designed For</label>
-                            <input type="text" class="form-control" id="designedFor" name="designed_for" placeholder="Enter designed for" required>
+                            <input type="text" class="form-control" id="designedFor" name="designed_for" placeholder="Enter designed for">
                         </div>
 
                         <div class="col-sm">
@@ -104,7 +104,7 @@
 
                     <div class="col-sm">
                         <label for="searchId">Search by ID</label>
-                        <input type="text" class="form-control" id="searchId" name="search_id" placeholder="Enter ID" required>
+                        <input type="text" class="form-control" id="searchId" name="search_id" placeholder="Enter ID">
                     </div>
 
                     <div class="col-sm">
@@ -133,6 +133,135 @@
                         });
                     });
                 });
+            </script>
+
+            <!-- Delete prompt by id -->
+            <div class="container">
+                <div class="row p-5">
+
+                    <div class="col-sm">
+                        <label for="deleteId">Delete by ID</label>
+                        <input type="text" class="form-control" id="deleteId" name="delete_id" placeholder="Enter ID">
+                    </div>
+
+                    <div class="col-sm">
+                        <button type="button" class="btn btn-primary" id="deleteButton">Delete</button>
+                    </div>
+
+                </div>
+            </div>
+
+            <script>
+                $(document).ready(function() {
+                    $('#deleteButton').click(function() {
+                        var deleteId = $('#deleteId').val();
+
+                        $.ajax({
+                            url: '/prompt/' + deleteId,
+                            type: 'DELETE',
+                            success: function(data) {
+                                console.log('Success:', data);
+                                alert('Prompt deleted successfully');
+                            },
+                            error: function(xhr, status, error) {
+                                $('#results').html("Error: " + error);
+                            }
+                        });
+                    });
+                });
+            </script>
+
+
+            <!-- Update prompt by id -->
+            <div class="container">
+                <div class="row p-5">
+
+                    <div class="col-sm">
+                        <label for="updateId">Update by ID</label>
+                        <input type="text" class="form-control" id="updateId" name="update_id" placeholder="Enter ID">
+                    </div>
+
+                    <div class="col-sm">
+                        <label for="updateName">Name</label>
+                        <input type="text" class="form-control" id="updateName" name="update_name" placeholder="Enter name">
+                    </div>
+
+                    <div class="col-sm">
+                        <label for="updatePromptContent">Prompt Content</label>
+                        <textarea class="form-control" id="updatePromptContent" name="update_prompt_content" rows="1" placeholder="Enter prompt content"></textarea>
+                    </div>
+
+                    <div class="col-sm">
+                        <label for="updatePromptVariables">Prompt Variables</label>
+                        <input type="text" class="form-control" id="updatePromptVariables" name="update_prompt_variables" placeholder="Enter prompt variables">
+                    </div>
+
+                    <div class="col-sm">
+                        <label for="updateDesignedFor">Designed For</label>
+                        <input type="text" class="form-control" id="updateDesignedFor" name="update_designed_for" placeholder="Enter designed for">
+                    </div>
+
+                    <div class="col-sm">
+                        <button type="button" class="btn btn-primary" id="updateButton">Update</button>
+                    </div>
+
+                </div>
+            </div>
+
+            <script>
+                //If the field is empty or null, do not update that field
+                $(document).ready(function() {
+                    $('#updateButton').click(function() {
+                        var updateId = $('#updateId').val();
+
+                        if (updateId === "") {
+                            alert("Please enter an ID to update");
+                            return;
+                        }
+
+                        var updateName = $('#updateName').val();
+                        var updatePromptContent = $('#updatePromptContent').val();
+                        var updatePromptVariables = $('#updatePromptVariables').val();
+                        var updateDesignedFor = $('#updateDesignedFor').val();
+
+                        var formData = {
+                            name: updateName,
+                            prompt_content: updatePromptContent,
+                            prompt_variables: updatePromptVariables,
+                            designed_for: updateDesignedFor
+                        };
+
+                        if (updateName === "") {
+                            delete formData.name;
+                        }
+                        if (updatePromptContent === "") {
+                            delete formData.prompt_content;
+                        }
+                        if (updatePromptVariables === "") {
+                            delete formData.prompt_variables;
+                        }
+                        if (updateDesignedFor === "") {
+                            delete formData.designed_for;
+                        }
+
+                        $.ajax({
+                            url: '/prompt/' + updateId,
+                            type: 'PUT',
+                            contentType: 'application/json',
+                            data: JSON.stringify(formData),
+                            dataType: 'json',
+                            success: function(data) {
+                                console.log('Success:', data);
+                                alert('Prompt updated successfully');
+                            },
+                            error: function(xhr, status, error) {
+                                $('#results').html("Error: " + error);
+                            }
+                        });
+                    });
+                });
+
+
             </script>
 
 
