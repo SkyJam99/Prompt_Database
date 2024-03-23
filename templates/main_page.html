@@ -42,6 +42,7 @@
         <script>
             $(document).ready(function() {
                 // Create prompt
+                /*
                 $("#createPromptForm").submit(function(e) {
                     e.preventDefault();
                     var promptText = $("#newPromptText").val();
@@ -60,6 +61,7 @@
                 // Function to refresh data
                 function refreshData() {
                     $.get("/readPrompt", function(data) {
+                        alert("refresh");
                         $('#results').html(data);
                     });
                 }
@@ -67,6 +69,7 @@
                 // Initial data load
                 refreshData();
             });
+            */
         </script>
     </body>
 </html>
