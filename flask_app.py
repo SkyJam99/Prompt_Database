@@ -36,6 +36,44 @@ def updatePrompt():
 
     return result
 
+#CRUD operations
+#Get All prompts
+@app.route('/prompt', methods=["GET"])
+def prompt():
+    result: str = "prompt"
+
+    return result
+
+#Get Prompt by id
+@app.route('/prompt/<int:id>', methods=["GET"])
+def prompt_id(id):
+    result: str = "prompt_id"
+
+    return result
+
+#Create Prompt
+@app.route('/prompt', methods=["POST"])
+def create_prompt():
+    result: str = "create_prompt"
+
+    return result
+
+#Update Prompt
+@app.route('/prompt/<int:id>', methods=["PUT"])
+def update_prompt(id):
+    result: str = "update_prompt"
+
+    return result
+
+#Delete Prompt
+@app.route('/prompt/<int:id>', methods=["DELETE"])
+def delete_prompt(id):
+    result: str = "delete_prompt"
+
+    return result
+
+
+
 
 def getConnection():
     Client = create_client(url, key)
