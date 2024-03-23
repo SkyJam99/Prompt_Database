@@ -132,8 +132,7 @@ print(create_prompt({
     "name": "Test Prompt",
     "prompt_content": "This is a test prompt",
     "prompt_variables": "Test",
-    "designed_for": "Test",
-    "parent_prompt_id": 1
+    "designed_for": "Test"
 }))
 print(update_prompt(1, {
     "name": "Test Prompt",
