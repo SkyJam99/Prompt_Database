@@ -1,5 +1,5 @@
-from flask import Flask, render_template
-
+from flask import Flask, redirect, render_template, request, url_for, jsonify
+from database_functions import get_all_prompts, get_prompt_by_id, create_prompt, update_prompt, delete_prompt
 app = Flask(__name__)
 
 
@@ -40,40 +40,39 @@ def updatePrompt():
 #Get All prompts
 @app.route('/prompt', methods=["GET"])
 def prompt():
-    result: str = "prompt"
+    result: str = get_all_prompts()
 
     return result
 
 #Get Prompt by id
 @app.route('/prompt/<int:id>', methods=["GET"])
 def prompt_id(id):
-    result: str = "prompt_id"
+    result: str = get_prompt_by_id(id)
 
     return result
 
 #Create Prompt
 @app.route('/prompt', methods=["POST"])
 def create_prompt():
-    result: str = "create_prompt"
+    data = request.json
+    result: str = create_prompt(data)
 
     return result
 
 #Update Prompt
 @app.route('/prompt/<int:id>', methods=["PUT"])
 def update_prompt(id):
-    result: str = "update_prompt"
+    data = request.json
+    result: str = update_prompt(id, data)
 
     return result
 
 #Delete Prompt
 @app.route('/prompt/<int:id>', methods=["DELETE"])
 def delete_prompt(id):
-    result: str = "delete_prompt"
+    result: str = delete_prompt(id)
 
     return result
 
 
 
-
-def getConnection():
-    Client = create_client(url, key)
