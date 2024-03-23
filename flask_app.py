@@ -16,26 +16,6 @@ def main_page():
     return render_template('main_page.html')
 
 
-@app.route('/readPrompt', methods=["GET"])
-def readPrompt():
-    result: str = "readPrompt"
-    
-    return result
-
-
-@app.route('/createPrompt', methods=["GET"])
-def createPrompt():
-    result: str = "createPrompt"
-
-    return result
-
-
-@app.route('/updatePrompt', methods=["GET"])
-def updatePrompt():
-    result: str = "updatePrompt"
-
-    return result
-
 #CRUD operations
 #Get All prompts
 @app.route('/prompt', methods=["GET"])
