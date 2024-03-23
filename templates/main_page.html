@@ -7,6 +7,8 @@
         <meta name="last modified" content="28/01/2024">
         <meta name="viewport" content="width=device-width, initial-scale=1">
 		<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous">
+        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p" crossorigin="anonymous"></script>
+
         <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
         <script src="https://code.jquery.com/jquery-3.7.0.js"></script>
 
@@ -25,6 +27,25 @@
                 </div>
             </div>
 
+            <!-- Buttons for showing and hiding each of the sections below (Search by ID, Create Prompt, Delete Prompt, and Update Prompt)-->
+
+            <div class="container">
+                <div class="row p-5">
+                    <div class="col-sm">
+                        <button class="btn btn-primary" type="button" data-bs-toggle="collapse" data-bs-target="#searchByIdSection" aria-expanded="false" aria-controls="searchById">Search by ID</button>
+                    </div>
+                    <div class="col-sm">
+                        <button class="btn btn-primary" type="button" data-bs-toggle="collapse" data-bs-target="#createPromptSection" aria-expanded="false" aria-controls="createPrompt">Create Prompt</button>
+                    </div>
+                    <div class="col-sm">
+                        <button class="btn btn-primary" type="button" data-bs-toggle="collapse" data-bs-target="#deletePromptSection" aria-expanded="false" aria-controls="deletePrompt">Delete Prompt</button>
+                    </div>
+                    <div class="col-sm">
+                        <button class="btn btn-primary" type="button" data-bs-toggle="collapse" data-bs-target="#updatePromptSection" aria-expanded="false" aria-controls="updatePrompt">Update Prompt</button>
+                    </div>
+            </div>
+
+
 
             <!-- Add new prompt form will be called by a jQuery POST Request -->
             <!-- Prompt database JSON format (need to collect data for each of these fields except id. parent_prompt_id is not included right now, will be included when inheriting a prompt):
@@ -37,7 +58,7 @@
             #     "parent_prompt_id": int
             #}
             -->
-            <div class="container">
+            <div class="container collapse" id="createPromptSection">
                 <div class="row">
 
 
@@ -99,7 +120,7 @@
             </script>
 
             <!-- Search for prompt by id -->
-            <div class="container">
+            <div class="container collapse" id="searchByIdSection">
                 <div class="row p-5">
 
                     <div class="col-sm">
@@ -136,7 +157,7 @@
             </script>
 
             <!-- Delete prompt by id -->
-            <div class="container">
+            <div class="container collapse" id="deletePromptSection">
                 <div class="row p-5">
 
                     <div class="col-sm">
@@ -173,7 +194,7 @@
 
 
             <!-- Update prompt by id -->
-            <div class="container">
+            <div class="container collapse" id="updatePromptSection">
                 <div class="row p-5">
 
                     <div class="col-sm">
