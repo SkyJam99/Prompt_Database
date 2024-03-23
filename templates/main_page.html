@@ -18,25 +18,25 @@
                 <div class="row">
                     <div class="col-sm-12">
                         <h1>Prompt Database</h1>
-                        
-                        
-                        
+
+
+
                     </div>
                 </div>
             </div>
 
-            
-                <!-- Add new prompt form will be called by a jQuery POST Request -->
-                <!-- Prompt database JSON format (need to collect data for each of these fields except id. parent_prompt_id is optional):
-                # {
-                #     "id": int,
-                #     "name": string,
-                #     "prompt_content": string,
-                #     "prompt_variables": string,
-                #     "designed_for": string,
-                #     "parent_prompt_id": int
-                #}
-                -->
+
+            <!-- Add new prompt form will be called by a jQuery POST Request -->
+            <!-- Prompt database JSON format (need to collect data for each of these fields except id. parent_prompt_id is not included right now, will be included when inheriting a prompt):
+            # {
+            #     "id": int,
+            #     "name": string,
+            #     "prompt_content": string,
+            #     "prompt_variables": string,
+            #     "designed_for": string,
+            #     "parent_prompt_id": int
+            #}
+            -->
             <div class="container">
                 <div class="row">
                     <form id="promptForm" class="form-inline">
@@ -68,12 +68,6 @@
                                 <input type="text" class="form-control" id="designedFor" name="designed_for" placeholder="Enter designed for" required>
                             </div>
                         </div>
-                        <div class="col-sm-2">
-                            <div class="form-group">
-                                <label for="parentPromptId">Parent Prompt ID (Optional)</label>
-                                <input type="number" id="parentPromptId" name="parent_prompt_id" placeholder="Enter parent prompt ID">
-                            </div>
-                        </div>
 
                         <div class="col-sm-2">
                             <button type="button" class="btn btn-primary" id="submitForm">Submit</button>
@@ -91,9 +85,9 @@
                             prompt_content: $('#promptContent').val(),
                             prompt_variables: $('#promptVariables').val(),
                             designed_for: $('#designedFor').val(),
-                            parent_prompt_id: $('#parentPromptId').val()
+                            //parent_prompt_id: $('#parentPromptId').val()
                         };
-                
+
                         $.ajax({
                             url: '/prompt',
                             type: 'POST',
@@ -112,8 +106,8 @@
                     });
                 });
             </script>
-                    
-            
+
+
 
             <div class="container-fluid">
                 <div class="row">
