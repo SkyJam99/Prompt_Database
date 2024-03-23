@@ -128,7 +128,7 @@
                         </div>
 
                         <div class="col-sm">
-                            <button type="button" class="btn btn-primary" id="submitForm">Submit</button>
+                            <button type="button" class="btn btn-primary" id="createButton">Submit</button>
                         </div>
 
 
@@ -137,17 +137,25 @@
 
             <script>
                 $(document).ready(function() {
-                    $('#submitForm').click(function() {
+                    $('#createButton').click(function() {
+                        //input validation
+                        let formName = $('#name').val();
+                        let formPromptContent = $('#promptContent').val();
+                        let formPromptVariables = $('#promptVariables').val();
+                        let formDesignedFor = $('#designedFor').val();
 
-
+                        if (formName === "" || formPromptContent === "" || formPromptVariables === "" || formDesignedFor === "") {
+                            alert("Please fill out all fields to create prompt");
+                            return;
+                        }
 
                         let formData = {
-                            name: $('#name').val(),
-                            prompt_content: $('#promptContent').val(),
-                            prompt_variables: $('#promptVariables').val(),
-                            designed_for: $('#designedFor').val(),
-                            //parent_prompt_id: $('#parentPromptId').val()
+                            name: formName,
+                            prompt_content: formPromptContent,
+                            prompt_variables: formPromptVariables,
+                            designed_for: formDesignedFor
                         };
+
 
                         $.ajax({
                             url: '/prompt',
@@ -187,6 +195,12 @@
                 $(document).ready(function() {
                     $('#deleteButton').click(function() {
                         let deleteId = $('#deleteId').val();
+
+                        //input validation using regex (id can a number between 1 and 999999)
+                        if (!/^[1-9]\d{0,5}$/.test(deleteId)) {
+                            alert("Please enter a valid ID (1-999999)");
+                            return;
+                        }
 
                         $.ajax({
                             url: '/prompt/' + deleteId,
@@ -246,8 +260,9 @@
                     $('#updateButton').click(function() {
                         let updateId = $('#updateId').val();
 
-                        if (updateId === "") {
-                            alert("Please enter an ID to update");
+                        //input validation using regex (id can a number between 1 and 999999)
+                        if (!/^[1-9]\d{0,5}$/.test(updateId)) {
+                            alert("Please enter a valid ID (1-999999)");
                             return;
                         }
 
