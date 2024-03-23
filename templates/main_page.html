@@ -39,7 +39,7 @@
             -->
             <div class="container">
                 <div class="row">
-                    
+
 
                         <div class="col-sm">
                             <label for="name">Name</label>
@@ -65,7 +65,7 @@
                             <button type="button" class="btn btn-primary" id="submitForm">Submit</button>
                         </div>
 
-                    
+
                 </div>
             </div>
 
@@ -90,9 +90,8 @@
                                 console.log('Success:', data);
                                 alert('Prompt added successfully');
                             },
-                            error: function(error) {
-                                console.error('Error:', error);
-                                alert('Error adding prompt');
+                            error: function(xhr, status, error) {
+                                $('#results').html("Error: " + error);
                             }
                         });
                     });
@@ -125,12 +124,11 @@
                             type: 'GET',
                             success: function(data) {
                                 console.log('Success:', data);
-                                var promptHtml = jsonToHtmlTable([data]);
+                                var promptHtml = jsonToHtmlTable(data);
                                 $('#results').html(promptHtml);
                             },
-                            error: function(error) {
-                                console.error('Error:', error);
-                                alert('Error searching for prompt');
+                            error: function(xhr, status, error) {
+                                $('#results').html("Error: " + error);
                             }
                         });
                     });
@@ -152,7 +150,7 @@
                 </div>
             </div>
 
-            
+
 
 
         </div>
