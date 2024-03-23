@@ -41,18 +41,27 @@
 
         <script>
             $(document).ready(function() {
+                getAllPrompts();
+            });
+
+            // Refresh button
+            $("#refreshData").click(function() {
+                getAllPrompts();
+            });
+
+            function getAllPrompts() {
                 $.ajax({
                     url: '/prompt',
                     type: 'GET',
                     success: function(data) {
+                        console.log(data);
                         $('#results').html(data);
                     },
                     error: function(xhr, status, error) {
                         $('#results').html("Error: " + error);
                     }
-            });
-
-                
+                });
+            }
                 // Create prompt
                 /*
                 $("#createPromptForm").submit(function(e) {
@@ -78,7 +87,7 @@
                 // Initial data load
                 refreshData();
             */
-            });
+            
             
         </script>
     </body>
