@@ -76,7 +76,7 @@ def get_all_prompts():
 
 
 #Get Prompt by id
-def get_prompt_by_id(id):
+def get_prompt_by_id(id: int):
     getConnection()
     response = supabase.table('prompts').select("*").eq('id', id).execute()
 
@@ -88,7 +88,7 @@ def get_prompt_by_id(id):
 
 
 #Create Prompt
-def create_prompt(prompt):
+def create_prompt(prompt: dict):
     getConnection()
     response = supabase.table('prompts').insert(prompt).execute()
 
@@ -99,7 +99,7 @@ def create_prompt(prompt):
     return response.data
 
 #Update Prompt
-def update_prompt(id, prompt):
+def update_prompt(id: int, prompt: dict):
     getConnection()
     response = supabase.table('prompts').update(prompt).eq('id', id).execute()
 

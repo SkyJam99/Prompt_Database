@@ -40,39 +40,39 @@ def updatePrompt():
 #Get All prompts
 @app.route('/prompt', methods=["GET"])
 def prompt():
-    result: str = get_all_prompts()
+    result = get_all_prompts()
 
-    return result
+    return jsonify(result)
 
 #Get Prompt by id
 @app.route('/prompt/<int:id>', methods=["GET"])
 def prompt_id(id):
-    result: str = get_prompt_by_id(id)
+    result = get_prompt_by_id(id)
 
-    return result
+    return jsonify(result)
 
 #Create Prompt
 @app.route('/prompt', methods=["POST"])
 def create_prompt():
     data = request.json
-    result: str = create_prompt(data)
+    result = create_prompt(data)
 
-    return result
+    return jsonify(result)
 
 #Update Prompt
 @app.route('/prompt/<int:id>', methods=["PUT"])
 def update_prompt(id):
     data = request.json
-    result: str = update_prompt(id, data)
+    result = update_prompt(id, data)
 
-    return result
+    return jsonify(result)
 
 #Delete Prompt
 @app.route('/prompt/<int:id>', methods=["DELETE"])
 def delete_prompt(id):
-    result: str = delete_prompt(id)
+    result = delete_prompt(id)
 
-    return result
+    return jsonify(result)
 
 
 
