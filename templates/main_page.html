@@ -418,6 +418,11 @@
                 
                 let action = $(this).data('action');
                 if (action === 'delete') {
+                    // Confirm that the user wants to delete the prompt
+                    if (!confirm("Are you sure you want to delete this prompt?")) {
+                        return;
+                    }
+
                     $.ajax({
                         url: '/prompt/' + id,
                         type: 'DELETE',
