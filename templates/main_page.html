@@ -469,7 +469,7 @@
                 // Populate the table rows with the JSON data
                 jsonData.forEach(item => {
                     tableHtml += "<tr>";
-                        
+
                     //Fill in the table with the data
                     tableHtml += "<td>" + item.id + "</td>";
                     tableHtml += "<td>" + item.name + "</td>";
@@ -477,6 +477,10 @@
                     tableHtml += "<td>" + item.prompt_variables + "</td>";
                     tableHtml += "<td>" + item.designed_for + "</td>";
                     tableHtml += "<td>" + item.parent_prompt_id + "</td>";
+                    
+                    //Need to clean up the date format
+                    let date = new Date(item.created_at);
+                    item.created_at = date.toISOString().slice(0, 10);
                     tableHtml += "<td>" + item.created_at + "</td>";
 
                     // Add buttons for inheriting, updating, and deleting prompts
