@@ -320,7 +320,8 @@
                     <div class="col-sm">
                         <button id="refreshData" class="btn btn-info">Refresh Prompts</button>
                         <div id='results'>
-
+                            <!-- Results will be displayed here -->
+                            <button type='button' class='btn btn-primary btn-action' data-id='1'>Inherit</button>
                         </div>
                     </div>
                 </div>
@@ -332,6 +333,13 @@
         </div>
 
         <script>
+            //Adding event listener to the Inherit buttons in the results table
+            $('#results').on('click', 'button.btn-action', function() {
+                let id = $(this).data('id');
+                console.log('Button with ID ' + id + ' was clicked');
+                alert('Inherit button clicked for ID ' + id);
+            });
+            
             function jsonToHtmlTable(jsonData) {
                 // Check if jsonData is empty
                 if (jsonData.length === 0) {
@@ -345,7 +353,7 @@
                 Object.keys(jsonData[0]).forEach(key => {
                     tableHtml += `<th>${key}</th>`;
                 });
-                tableHtml += "</tr>";
+                tableHtml += "<th>Inherit Prompt</th></tr>";
 
                 // Populate the table rows with the JSON data
                 jsonData.forEach(item => {
@@ -353,7 +361,7 @@
                     Object.values(item).forEach(value => {
                         tableHtml += `<td>${value}</td>`;
                     });
-                    tableHtml += "</tr>";
+                    tableHtml += "<td><button type='button' class='btn btn-primary btn-action' data-id='" + item.id + "'>Inherit</button></td></tr>";
                 });
 
                 // Close the table tags
