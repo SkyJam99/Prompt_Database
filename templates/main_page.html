@@ -45,7 +45,34 @@
                     </div>
             </div>
 
-            
+            <!-- Script to hide the other sections when one section is shown -->
+            <script>
+                $(document).ready(function() {
+                    $('#searchByIdSection').on('show.bs.collapse', function() {
+                        $('#createPromptSection').collapse('hide');
+                        $('#deletePromptSection').collapse('hide');
+                        $('#updatePromptSection').collapse('hide');
+                    });
+
+                    $('#createPromptSection').on('show.bs.collapse', function() {
+                        $('#searchByIdSection').collapse('hide');
+                        $('#deletePromptSection').collapse('hide');
+                        $('#updatePromptSection').collapse('hide');
+                    });
+
+                    $('#deletePromptSection').on('show.bs.collapse', function() {
+                        $('#searchByIdSection').collapse('hide');
+                        $('#createPromptSection').collapse('hide');
+                        $('#updatePromptSection').collapse('hide');
+                    });
+
+                    $('#updatePromptSection').on('show.bs.collapse', function() {
+                        $('#searchByIdSection').collapse('hide');
+                        $('#createPromptSection').collapse('hide');
+                        $('#deletePromptSection').collapse('hide');
+                    });
+                });
+            </script>
 
             
 
