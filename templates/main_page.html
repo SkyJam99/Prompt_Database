@@ -405,6 +405,13 @@
         </div>
 
         <script>
+            // Refresh table on checkbox change
+            $('#simplifiedTable').change(function() {
+                refreshData();
+            });
+
+
+
             //Adding event listener to the buttons in the results table
             $('#results').on('click', 'button.btn-action', function() {
                 let id = $(this).data('id');
