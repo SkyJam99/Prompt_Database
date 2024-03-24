@@ -26,6 +26,18 @@
                     </div>
                 </div>
             </div>
+            
+            <!-- TODO Ideas for future features:
+            [] Add a button for copying the prompt content to the clipboard
+            [] Add a form for filling in prompt variables and getting final version
+            [] Create database for storing sets of filled prompt variables to reuse
+            [] Add a button for copying the final prompt to the clipboard
+            [] Add a button for downloading the final prompt as a text file
+            [] Add a button for sending the final prompt to OpenAI API
+            [] Add a database for saving the final prompts and responses from OpenAI API
+            [] Add a button for copying the OpenAI API response to the clipboard
+            [] Add a button for downloading the OpenAI API response as a text file
+            -->
 
             <!-- Buttons for showing and hiding each of the sections below (Search by ID, Create Prompt, Delete Prompt, and Update Prompt)-->
 
@@ -203,6 +215,7 @@
                             success: function(data) {
                                 console.log('Success:', data);
                                 alert('Prompt added successfully');
+                                refreshData();
                             },
                             error: function(xhr, status, error) {
                                 $('#results').html("Error: " + error);
@@ -245,6 +258,7 @@
                             success: function(data) {
                                 console.log('Success:', data);
                                 alert('Prompt deleted successfully');
+                                refreshData();
                             },
                             error: function(xhr, status, error) {
                                 $('#results').html("Error: " + error);
@@ -351,6 +365,7 @@
                             success: function(data) {
                                 console.log('Success:', data);
                                 alert('Prompt updated successfully');
+                                refreshData();
                             },
                             error: function(xhr, status, error) {
                                 $('#results').html("Error: " + error);
@@ -364,7 +379,7 @@
 
 
             <!-- Display all prompts in a table -->
-
+            <!-- TODO Clean up this section and fix the issue where long prompts extend out the table-->
 
             <div class="container">
                 <div class="row p-5">
@@ -380,6 +395,7 @@
                             <button type='button' class='btn btn-primary btn-action' data-id='1'>Inherit</button>
                         </div>
                     </div>
+
                 </div>
             </div>
 
@@ -401,6 +417,7 @@
                         success: function(data) {
                             console.log('Success:', data);
                             alert('Prompt deleted successfully');
+                            refreshData();
                         },
                         error: function(xhr, status, error) {
                             $('#results').html("Error: " + error);
@@ -425,7 +442,7 @@
                             $('#updateParentPromptId').val(data[0].parent_prompt_id);
                         },
                         error: function(xhr, status, error) {
-                            $('#results').html("Issue getting prompt infor to update. Error: " + error);
+                            $('#results').html("Issue getting prompt information to update. Error: " + error);
                         }
                     });
                     return;
@@ -576,9 +593,14 @@
 
             // Refresh button
             $("#refreshData").click(function() {
+                refreshData();
+            });
+
+            // Refresh function
+            function refreshData() {
                 $('#results').html('')
                 getAllPrompts();
-            });
+            }
         </script>
     </body>
 </html>
