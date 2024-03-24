@@ -338,7 +338,27 @@
                 let id = $(this).data('id');
                 console.log('Button with ID ' + id + ' was clicked');
                 alert('Inherit button clicked for ID ' + id);
+
+                //Open the create prompt section
+                $('#createPromptSection').collapse('show');
+
+                //Get the prompt data for the selected ID and fill in the form fields
+                $.ajax({
+                    url: '/prompt/' + id,
+                    type: 'GET',
+                    success: function(data) {
+                        console.log('Success:', data);
+                        $('#name').val(data[0].name);
+                        $('#promptContent').val(data[0].prompt_content);
+                        $('#promptVariables').val(data[0].prompt_variables);
+                        $('#designedFor').val(data[0].designed_for);
+                    },
+                    error: function(xhr, status, error) {
+                        $('#results').html("Issue getting prompt infor to inherit. Error: " + error);
+                    }
+                });
             });
+            
             
             function jsonToHtmlTable(jsonData) {
                 // Check if jsonData is empty
