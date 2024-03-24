@@ -370,6 +370,11 @@
                 <div class="row p-5">
                     <div class="col-sm">
                         <button id="refreshData" class="btn btn-info">Refresh Prompts</button>
+
+                        <!--Checkbox for simplified table, clean up this code later-->
+                        <input type="checkbox" id="simplifiedTable" name="simplified_table" value="simplified_table">
+                        <label for="simplifiedTable">Simplified Table</label>
+
                         <div id='results'>
                             <!-- Results will be displayed here -->
                             <button type='button' class='btn btn-primary btn-action' data-id='1'>Inherit</button>
@@ -451,15 +456,7 @@
             });
             
             
-            function jsonToHtmlTable(jsonData) {
-                // Check if jsonData is empty
-                if (jsonData.length === 0) {
-                    return "<p>No data available</p>";
-                }
-
-                // Start building the table
-                let tableHtml = "<table class='table table-hover table-primary table-bordered table-striped'><tr>";
-
+            function jsonToHtmlTable(jsonData, tableHtml) {
 
                 //Set Custom order of headers (id, name, prompt_content, prompt_variables, designed_for, parent_prompt_id, created_at)
                 tableHtml += "<th>ID</th><th>Name</th><th>Prompt Content</th><th>Prompt Variables</th><th>Designed For</th><th>Parent Prompt ID</th><th>Created At</th>";
@@ -477,16 +474,15 @@
                     tableHtml += "<td>" + item.prompt_variables + "</td>";
                     tableHtml += "<td>" + item.designed_for + "</td>";
                     tableHtml += "<td>" + item.parent_prompt_id + "</td>";
-                    
+
                     //Need to clean up the date format
                     let date = new Date(item.created_at);
                     item.created_at = date.toISOString().slice(0, 10);
                     tableHtml += "<td>" + item.created_at + "</td>";
 
                     // Add buttons for inheriting, updating, and deleting prompts
-                    tableHtml += "<td><button type='button' class='btn btn-primary btn-action' data-id='" + item.id + "' data-action='inherit'>Inherit</button></td>";
-                    tableHtml += "<td><button type='button' class='btn btn-primary btn-action' data-id='" + item.id + "' data-action='update'>Update</button></td>";
-                    tableHtml += "<td><button type='button' class='btn btn-primary btn-action' data-id='" + item.id + "' data-action='delete'>Delete</button></td>";
+                    tableHtml += addButtonsToTable(item);
+
                     tableHtml += "</tr>";
                 });
 
@@ -494,6 +490,67 @@
                 tableHtml += "</table>";
 
                 return tableHtml;
+            }
+
+            // Simplified table verson (only shows ID, Name, and Prompt Content, Inherit, Update, and Delete buttons)
+            function simpleJsonToHtmlTable(jsonData, tableHtml) {
+
+
+                //Set Custom order of headers (id, name, prompt_content)
+                tableHtml += "<th>ID</th><th>Name</th><th>Prompt Content</th>";
+
+                tableHtml += "<th>Inherit Prompt</th><th>Update Prompt</th><th>Delete Prompt</th></tr>";
+
+                // Populate the table rows with the JSON data
+                jsonData.forEach(item => {
+                    tableHtml += "<tr>";
+
+                    //Fill in the table with the data
+                    tableHtml += "<td>" + item.id + "</td>";
+                    tableHtml += "<td>" + item.name + "</td>";
+                    tableHtml += "<td>" + item.prompt_content + "</td>";
+
+                    // Add buttons for inheriting, updating, and deleting prompts
+                    addButtonsToTable(item);
+
+                    tableHtml += "</tr>";
+                });
+
+                // Close the table tags
+                tableHtml += "</table>";
+
+                return tableHtml;
+            }
+
+            // Function to avoid repeating the code when converting JSON to HTML table, and choose which one to use based on the checkbox
+            function jsonToHtmlRouter(jsonData) {
+                // Check if jsonData is empty
+                if (jsonData.length === 0) {
+                    return "<p>No data available</p>";
+                }
+
+                // Check if the simplified table checkbox is checked
+                let simplifyTable = $('#simplifiedTable').is(':checked');
+
+                // Start building the table
+                let tableHtml = "<table class='table table-hover table-primary table-bordered table-striped'><tr>";
+
+                if (simplifyTable) {
+                    return simpleJsonToHtmlTable(jsonData, tableHtml);
+                } else {
+                    return jsonToHtmlTable(jsonData, tableHtml);
+                }
+            }
+
+            // Function to add buttons to the table (mostly to clean up code repitition)
+            function addButtonsToTable(item) {
+                // Add buttons for inheriting, updating, and deleting prompts
+                let buttonTableHtml = "<td><button type='button' class='btn btn-primary btn-action' data-id='" + item.id + "' data-action='inherit'>Inherit</button></td>";
+                buttonTableHtml += "<td><button type='button' class='btn btn-primary btn-action' data-id='" + item.id + "' data-action='update'>Update</button></td>";
+                buttonTableHtml += "<td><button type='button' class='btn btn-primary btn-action' data-id='" + item.id + "' data-action='delete'>Delete</button></td>";
+
+                return buttonTableHtml;
+                
             }
 
 
