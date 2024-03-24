@@ -108,7 +108,7 @@
                             type: 'GET',
                             success: function(data) {
                                 console.log('Success:', data);
-                                let promptHtml = jsonToHtmlTable(data);
+                                let promptHtml = jsonToHtmlRouter(data);
                                 $('#results').html(promptHtml);
                             },
                             error: function(xhr, status, error) {
@@ -561,7 +561,7 @@
                     type: 'GET',
                     success: function(data) {
                         console.log(data);
-                        let promptsHtml = jsonToHtmlTable(data)
+                        let promptsHtml = jsonToHtmlRouter(data)
                         $('#results').html(promptsHtml);
                     },
                     error: function(xhr, status, error) {
