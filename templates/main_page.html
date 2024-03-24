@@ -460,18 +460,25 @@
                 // Start building the table
                 let tableHtml = "<table class='table table-hover table-primary table-bordered table-striped'><tr>";
 
-                // Extract headings (keys of the JSON objects)
-                Object.keys(jsonData[0]).forEach(key => {
-                    tableHtml += `<th>${key}</th>`;
-                });
+
+                //Set Custom order of headers (id, name, prompt_content, prompt_variables, designed_for, parent_prompt_id, created_at)
+                tableHtml += "<th>ID</th><th>Name</th><th>Prompt Content</th><th>Prompt Variables</th><th>Designed For</th><th>Parent Prompt ID</th><th>Created At</th>";
+
                 tableHtml += "<th>Inherit Prompt</th><th>Update Prompt</th><th>Delete Prompt</th></tr>";
 
                 // Populate the table rows with the JSON data
                 jsonData.forEach(item => {
                     tableHtml += "<tr>";
-                    Object.values(item).forEach(value => {
-                        tableHtml += `<td>${value}</td>`;
-                    });
+                        
+                    //Fill in the table with the data
+                    tableHtml += "<td>" + item.id + "</td>";
+                    tableHtml += "<td>" + item.name + "</td>";
+                    tableHtml += "<td>" + item.prompt_content + "</td>";
+                    tableHtml += "<td>" + item.prompt_variables + "</td>";
+                    tableHtml += "<td>" + item.designed_for + "</td>";
+                    tableHtml += "<td>" + item.parent_prompt_id + "</td>";
+                    tableHtml += "<td>" + item.created_at + "</td>";
+
                     // Add buttons for inheriting, updating, and deleting prompts
                     tableHtml += "<td><button type='button' class='btn btn-primary btn-action' data-id='" + item.id + "' data-action='inherit'>Inherit</button></td>";
                     tableHtml += "<td><button type='button' class='btn btn-primary btn-action' data-id='" + item.id + "' data-action='update'>Update</button></td>";
