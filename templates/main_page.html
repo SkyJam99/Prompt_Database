@@ -587,7 +587,7 @@
                 //Set Custom order of headers (id, name, prompt_content, prompt_variables, designed_for, parent_prompt_id, created_at)
                 tableHtml += "<th>ID</th><th>Name</th><th>Prompt Content</th><th>Prompt Variables</th><th>Designed For</th><th>Parent Prompt ID</th><th>Created At</th>";
 
-                tableHtml += "<th>Inherit Prompt</th><th>Update Prompt</th><th>Delete Prompt</th></tr>";
+                tableHtml += "<th>Actions</th></tr>";
 
                 // Populate the table rows with the JSON data
                 jsonData.forEach(item => {
@@ -625,7 +625,7 @@
                 //Set Custom order of headers (id, name, prompt_content)
                 tableHtml += "<th>ID</th><th>Name</th><th>Prompt Content</th>";
 
-                tableHtml += "<th>Inherit Prompt</th><th>Update Prompt</th><th>Delete Prompt</th></tr>";
+                tableHtml += "<th>Actions</th></tr>";
 
                 // Populate the table rows with the JSON data
                 jsonData.forEach(item => {
@@ -671,9 +671,9 @@
             // Function to add buttons to the table (mostly to clean up code repitition)
             function addButtonsToTable(item) {
                 // Add buttons for inheriting, updating, and deleting prompts
-                let buttonTableHtml = "<td><button type='button' class='btn btn-primary btn-action' data-id='" + item.id + "' data-action='inherit'>Inherit</button></td>";
-                buttonTableHtml += "<td><button type='button' class='btn btn-primary btn-action' data-id='" + item.id + "' data-action='update'>Update</button></td>";
-                buttonTableHtml += "<td><button type='button' class='btn btn-primary btn-action' data-id='" + item.id + "' data-action='delete'>Delete</button></td>";
+                let buttonTableHtml = "<td><button type='button' class='btn btn-primary btn-action' data-id='" + item.id + "' data-action='inherit'>Inherit</button>";
+                buttonTableHtml += "<button type='button' class='btn btn-primary btn-action' data-id='" + item.id + "' data-action='update'>Update</button>";
+                buttonTableHtml += "<button type='button' class='btn btn-primary btn-action' data-id='" + item.id + "' data-action='delete'>Delete</button></td>";
 
                 return buttonTableHtml;
 
