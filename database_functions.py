@@ -1,11 +1,11 @@
 from supabase import create_client, Client
 from flask import jsonify
 from openai import OpenAI
-
+from openaikey import openaikey
 
 # TODO - remove this API key, delete it, and create an environment key
 client = OpenAI(
-    api_key='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'
+    api_key=openaikey
 )
 
 # Backend funtion that takes a prompt and returns the completion
@@ -20,6 +20,7 @@ def get_completion(prompt):
 
     return completion.choices[0].message
 
+print(get_completion("What is the capital of the United States?"))
 
 url: str = "https://nbbemlvtjsvhfgwjbdgx.supabase.co"
 key: str = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Im5iYmVtbHZ0anN2aGZnd2piZGd4Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3MDk5OTQ5NDMsImV4cCI6MjAyNTU3MDk0M30.0VYbbTNTEVmzM0ooAvLS09mbfAzsuk4GUEltvl6Y5AE"
