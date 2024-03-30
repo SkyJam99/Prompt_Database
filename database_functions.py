@@ -15,17 +15,18 @@ client = OpenAI(
 #         "prompt": "What is the capital of United States"
 #     }
 # ]
-def get_completion(prompt: dict):
+def get_completion(prompt):
 
     completion = client.chat.completions.create(
         model="gpt-3.5-turbo",
         messages=[
             {"role": "system", "content": "You are a flexible assistant, helping the user with anything they ask for in a step by step way to ensure the best possible results."},
-            {"role": "user", "content": prompt.get("prompt")}
+            {"role": "user", "content": prompt["prompt"]}
         ]
     )
 
     return completion.choices[0].message
+
 
 
 url: str = "https://nbbemlvtjsvhfgwjbdgx.supabase.co"
