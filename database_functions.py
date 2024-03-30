@@ -9,18 +9,24 @@ client = OpenAI(
 )
 
 # Backend funtion that takes a prompt and returns the completion
-def get_completion(prompt):
+# Prompt dict will look like this:
+# [
+#     {
+#         "prompt": "What is the capital of United States"
+#     }
+# ]
+def get_completion(prompt: dict):
+
     completion = client.chat.completions.create(
         model="gpt-3.5-turbo",
         messages=[
             {"role": "system", "content": "You are a flexible assistant, helping the user with anything they ask for in a step by step way to ensure the best possible results."},
-            {"role": "user", "content": prompt}
+            {"role": "user", "content": prompt.get("prompt")}
         ]
     )
 
     return completion.choices[0].message
 
-print(get_completion("What is the capital of the United States?"))
 
 url: str = "https://nbbemlvtjsvhfgwjbdgx.supabase.co"
 key: str = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Im5iYmVtbHZ0anN2aGZnd2piZGd4Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3MDk5OTQ5NDMsImV4cCI6MjAyNTU3MDk0M30.0VYbbTNTEVmzM0ooAvLS09mbfAzsuk4GUEltvl6Y5AE"

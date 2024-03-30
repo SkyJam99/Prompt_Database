@@ -45,7 +45,7 @@ def prompt_id(id):
 #Get Prompt Completion
 @app.route('/prompt/completion', methods=["GET"])
 def prompt_completion():
-    prompt = request.args.get('prompt')
+    prompt = request.json
     result = get_completion(prompt)
 
     return jsonify(result)
