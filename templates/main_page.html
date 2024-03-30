@@ -514,6 +514,7 @@
                 let id = $(this).data('id');
 
                 let action = $(this).data('action');
+                
                 if (action === 'delete') {
                     // Confirm that the user wants to delete the prompt
                     if (!confirm("Are you sure you want to delete this prompt?")) {
@@ -533,6 +534,7 @@
                         }
                     });
                     return;
+
                 } else if (action == 'update') {
                     //Open the update prompt section
                     $('#updatePromptSection').collapse('show');
@@ -555,6 +557,7 @@
                         }
                     });
                     return;
+
                 } else if (action == 'inherit') {
                     //Open the create prompt section
                     $('#createPromptSection').collapse('show');
@@ -576,7 +579,28 @@
                         }
                     });
                     return;
-                } else {
+
+                } else if (action == 'run') {
+                    //Open the run prompt section
+                    $('#runPromptSection').collapse('show');
+
+                    //Get the prompt data for the selected ID and fill in the form fields
+                    $.ajax({
+                        url: '/prompt/' + id,
+                        type: 'GET',
+                        success: function(data) {
+                            console.log('Success:', data);
+                            $('#runPromptContent').val(data[0].prompt_content);
+                            $('#runPromptVariables').val(data[0].prompt_variables);
+                        },
+                        error: function(xhr, status, error) {
+                            $('#results').html("Issue getting prompt information to run. Error: " + error);
+                        }
+                    });
+                    return;
+                }
+                
+                else {
                     alert("Invalid action");
                 }
             });
@@ -670,10 +694,11 @@
 
             // Function to add buttons to the table (mostly to clean up code repitition)
             function addButtonsToTable(item) {
-                // Add buttons for inheriting, updating, and deleting prompts
+                // Add buttons for inheriting, updating, deleting, and running prompts
                 let buttonTableHtml = "<td><button type='button' class='btn btn-primary btn-action' data-id='" + item.id + "' data-action='inherit'>Inherit</button>";
                 buttonTableHtml += "<button type='button' class='btn btn-primary btn-action' data-id='" + item.id + "' data-action='update'>Update</button>";
                 buttonTableHtml += "<button type='button' class='btn btn-primary btn-action' data-id='" + item.id + "' data-action='delete'>Delete</button></td>";
+                buttonTableHTML += "<button type='button' class='btn btn-primary btn-action' data-id='" + item.id + "' data-action='run'>Run</button></td>";
 
                 return buttonTableHtml;
 
