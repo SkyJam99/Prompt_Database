@@ -28,7 +28,7 @@
             </div>
 
             <!-- TODO Ideas for future features:
-            [] Add a button for copying the prompt content to the clipboard
+            [x] Add a button for copying the prompt content to the clipboard
             [] Add a form for filling in prompt variables and getting final version
             [] Create database for storing sets of filled prompt variables to reuse
             [] Add a button for copying the final prompt to the clipboard
@@ -98,86 +98,7 @@
             </script>
 
 
-            <!-- Run prompt section (copy to keyboard, run through openAI, or download text document with prompt)-->
-            <div class="container collapse" id="runPromptSection">
-                <div class="row p-5">
-
-                    <div class="col-sm">
-                        <label for="promptContent">Prompt Content</label>
-                        <textarea class="form-control" id="runPromptContent" name="run_prompt_content" rows="1" placeholder="Enter prompt content"></textarea>
-                    </div>
-
-                    <div class="col-sm">
-                        <label for="promptVariables">Prompt Variables</label>
-                        <input type="text" class="form-control" id="runPromptVariables" name="run_prompt_variables" placeholder="Enter prompt variables">
-                    </div>
-
-                    <div class="col-sm">
-                        <button type="button" class="btn btn-primary" id="runButton">Run</button>
-                    </div>
-
-                    <div class="col-sm">
-                        <button type="button" class="btn btn-primary" id="copyButton">Copy</button>
-                    </div>
-
-                    <div class="col-sm">
-                        <button type="button" class="btn btn-primary" id="downloadButton">Download</button>
-                    </div>
-
-                </div>
-            </div>
-            <script>
-                $(document).ready(function() {
-                    $('#runButton').click(function() {
-                        let runPromptContent = $('#runPromptContent').val();
-                        let runPromptVariables = $('#runPromptVariables').val();
-
-                        //input validation
-                        if (runPromptContent === "" || runPromptVariables === "") {
-                            alert("Please fill out all fields to run prompt");
-                            return;
-                        }
-
-                        //TODO Run prompt through OpenAI API
-                        //TODO Display the response in a new section
-                    });
-
-                    $('#copyButton').click(function() {
-                        let runPromptContent = $('#runPromptContent').val();
-                        let runPromptVariables = $('#runPromptVariables').val();
-
-                        //input validation
-                        if (runPromptContent === "" || runPromptVariables === "") {
-                            alert("Please fill out all fields to copy prompt:" + runPromptContent + "   " + runPromptVariables);
-                            return;
-                        }
-
-                        //TODO Copy the prompt to the clipboard
-                        // Solution: https://www.buildwithphp.com/how-to-copy-text-to-clipboard-using-jquery
-                        let tempTextArea = $('<textarea>');
-                        $('body').append(tempTextArea);
-                        tempTextArea.val(runPromptContent).select();
-                        document.execCommand('copy');
-                        tempTextArea.remove();
-                        alert("Prompt copied to clipboard")
-                    });
-
-                    $('#downloadButton').click(function() {
-                        let runPromptContent = $('#runPromptContent').val();
-                        let runPromptVariables = $('#runPromptVariables').val();
-
-                        //input validation
-                        if (runPromptContent === "" || runPromptVariables === "") {
-                            alert("Please fill out all fields to download prompt");
-                            return;
-                        }
-
-                        //TODO Download the prompt as a text file
-                    });
-                });
-
-
-            </script>
+            
 
             <!-- Search for prompt by id -->
             <div class="container collapse" id="searchByIdSection">
@@ -468,6 +389,88 @@
 
             </script>
 
+
+
+            <!-- Run prompt section (copy to keyboard, run through openAI, or download text document with prompt)-->
+            <div class="container collapse" id="runPromptSection">
+                <div class="row p-5">
+
+                    <div class="col-sm">
+                        <label for="promptContent">Prompt Content</label>
+                        <textarea class="form-control" id="runPromptContent" name="run_prompt_content" rows="1" placeholder="Enter prompt content"></textarea>
+                    </div>
+
+                    <div class="col-sm">
+                        <label for="promptVariables">Prompt Variables</label>
+                        <input type="text" class="form-control" id="runPromptVariables" name="run_prompt_variables" placeholder="Enter prompt variables">
+                    </div>
+
+                    <div class="col-sm">
+                        <button type="button" class="btn btn-primary" id="runButton">Run</button>
+                    </div>
+
+                    <div class="col-sm">
+                        <button type="button" class="btn btn-primary" id="copyButton">Copy</button>
+                    </div>
+
+                    <div class="col-sm">
+                        <button type="button" class="btn btn-primary" id="downloadButton">Download</button>
+                    </div>
+
+                </div>
+            </div>
+            <script>
+                $(document).ready(function() {
+                    $('#runButton').click(function() {
+                        let runPromptContent = $('#runPromptContent').val();
+                        let runPromptVariables = $('#runPromptVariables').val();
+
+                        //input validation
+                        if (runPromptContent === "" || runPromptVariables === "") {
+                            alert("Please fill out all fields to run prompt");
+                            return;
+                        }
+
+                        //TODO Run prompt through OpenAI API
+                        //TODO Display the response in a new section
+                    });
+
+                    $('#copyButton').click(function() {
+                        let runPromptContent = $('#runPromptContent').val();
+                        let runPromptVariables = $('#runPromptVariables').val();
+
+                        //input validation
+                        if (runPromptContent === "") {
+                            alert("Please fill out all fields to copy prompt:" + runPromptContent + "   " + runPromptVariables);
+                            return;
+                        }
+
+                        // Copy the prompt to the clipboard
+                        // Reference: https://www.buildwithphp.com/how-to-copy-text-to-clipboard-using-jquery
+                        let tempTextArea = $('<textarea>');
+                        $('body').append(tempTextArea);
+                        tempTextArea.val(runPromptContent).select();
+                        document.execCommand('copy');
+                        tempTextArea.remove();
+                        alert("Prompt copied to clipboard")
+                    });
+
+                    $('#downloadButton').click(function() {
+                        let runPromptContent = $('#runPromptContent').val();
+                        let runPromptVariables = $('#runPromptVariables').val();
+
+                        //input validation
+                        if (runPromptContent === "") {
+                            alert("Please fill out all fields to download prompt");
+                            return;
+                        }
+
+                        //TODO Download the prompt as a text file
+                    });
+                });
+
+
+            </script>
 
             <!-- Display all prompts in a table -->
             <!-- TODO Clean up this section and fix the issue where long prompts extend out the table-->
