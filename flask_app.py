@@ -1,5 +1,5 @@
 from flask import Flask, redirect, render_template, request, url_for, jsonify
-from database_functions import get_all_prompts_db, get_prompt_by_id_db, create_prompt_db, update_prompt_db, delete_prompt_db
+from database_functions import get_all_prompts_db, get_prompt_by_id_db, create_prompt_db, update_prompt_db, delete_prompt_db, get_completion
 app = Flask(__name__)
 
 
@@ -28,6 +28,25 @@ def prompt():
 @app.route('/prompt/<int:id>', methods=["GET"])
 def prompt_id(id):
     result = get_prompt_by_id_db(id)
+
+    return jsonify(result)
+
+# def get_completion(prompt):
+#     completion = client.chat.completions.create(
+#         model="gpt-3.5-turbo",
+#         messages=[
+#             {"role": "system", "content": "You are a flexible assistant, helping the user with anything they ask for in a step by step way to ensure the best possible results."},
+#             {"role": "user", "content": prompt}
+#         ]
+#     )
+
+#     return completion.choices[0].message
+
+#Get Prompt Completion
+@app.route('/prompt/completion', methods=["GET"])
+def prompt_completion():
+    prompt = request.args.get('prompt')
+    result = get_completion(prompt)
 
     return jsonify(result)
 
