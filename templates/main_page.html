@@ -39,7 +39,7 @@
             [] Add a button for downloading the OpenAI API response as a text file
             -->
 
-            <!-- Buttons for showing and hiding each of the sections below (Search by ID, Create Prompt, Delete Prompt, and Update Prompt)-->
+            <!-- Buttons for showing and hiding each of the sections below (Search by ID, Create Prompt, Delete Prompt, Update Prompt, Run Prompt)-->
 
             <div class="container">
                 <div class="row p-5">
@@ -55,37 +55,69 @@
                     <div class="col-sm">
                         <button class="btn btn-primary" type="button" data-bs-toggle="collapse" data-bs-target="#updatePromptSection" aria-expanded="false" aria-controls="updatePrompt">Update Prompt</button>
                     </div>
+                    <div class="col-sm">
+                        <button class="btn btn-primary" type="button" data-bs-toggle="collapse" data-bs-target="#runPromptSection" aria-expanded="false" aria-controls="runPrompt">Run Prompt</button>
+                    </div>
             </div>
 
             <!-- Script to hide the other sections when one section is shown -->
             <script>
+                //To add another section, add the name to the document ready function and the hideSections function
                 $(document).ready(function() {
                     $('#searchByIdSection').on('show.bs.collapse', function() {
-                        $('#createPromptSection').collapse('hide');
-                        $('#deletePromptSection').collapse('hide');
-                        $('#updatePromptSection').collapse('hide');
+                        hideSections('searchByIdSection');
                     });
 
                     $('#createPromptSection').on('show.bs.collapse', function() {
-                        $('#searchByIdSection').collapse('hide');
-                        $('#deletePromptSection').collapse('hide');
-                        $('#updatePromptSection').collapse('hide');
+                        hideSections('createPromptSection');
                     });
 
                     $('#deletePromptSection').on('show.bs.collapse', function() {
-                        $('#searchByIdSection').collapse('hide');
-                        $('#createPromptSection').collapse('hide');
-                        $('#updatePromptSection').collapse('hide');
+                        hideSections('deletePromptSection');
                     });
 
                     $('#updatePromptSection').on('show.bs.collapse', function() {
-                        $('#searchByIdSection').collapse('hide');
-                        $('#createPromptSection').collapse('hide');
-                        $('#deletePromptSection').collapse('hide');
+                        hideSections('updatePromptSection');
+                    });
+
+                    $('#runPromptSection').on('show.bs.collapse', function() {
+                        hideSections('runPromptSection');
                     });
                 });
+
+                //More efficient function for hiding sections
+                function hideSections(sectionToShow) {
+                    let sections = ['searchByIdSection', 'createPromptSection', 'deletePromptSection', 'updatePromptSection', 'runPromptSection'];
+                    sections.pop(sectionToShow);
+                    sections.forEach(section => {
+                        if (section !== sectionToShow) {
+                            $('#' + section).collapse('hide');
+                        }
+                    });
+                }
             </script>
 
+
+            <!-- Run prompt section -->
+            <div class="container collapse" id="runPromptSection">
+                <div class="row p-5">
+
+                    <div class="col-sm">
+                        <label for="promptContent">Prompt Content</label>
+                        <textarea class="form-control" id="promptContent" name="prompt_content" rows="1" placeholder="Enter prompt content"></textarea>
+                    </div>
+
+                    <div class="col-sm">
+                        <label for="promptVariables">Prompt Variables</label>
+                        <input type="text" class="form-control" id="promptVariables" name="prompt_variables" placeholder="Enter prompt variables">
+                    </div>
+
+                    <div class="col-sm">
+                        <button type="button" class="btn btn-primary" id="runButton">Run</button>
+                    </div>
+
+                </div>
+            </div>
             
 
             <!-- Search for prompt by id -->
@@ -132,7 +164,7 @@
             </script>
 
             <!-- Add new prompt form will be called by a jQuery POST Request -->
-            <!-- Prompt database JSON format (need to collect data for each of these fields except id. parent_prompt_id is not included right now, will be included when inheriting a prompt):
+            <!-- Prompt database JSON format (need to collect data for each of these fields except id ):
             # {
             #     "id": int,
             #     "name": string,
