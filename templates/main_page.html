@@ -98,7 +98,7 @@
             </script>
 
 
-            <!-- Run prompt section -->
+            <!-- Run prompt section (copy to keyboard, run through openAI, or download text document with prompt)-->
             <div class="container collapse" id="runPromptSection">
                 <div class="row p-5">
 
@@ -116,9 +116,67 @@
                         <button type="button" class="btn btn-primary" id="runButton">Run</button>
                     </div>
 
+                    <div class="col-sm">
+                        <button type="button" class="btn btn-primary" id="copyButton">Copy</button>
+                    </div>
+
+                    <div class="col-sm">
+                        <button type="button" class="btn btn-primary" id="downloadButton">Download</button>
+                    </div>
+
                 </div>
             </div>
-            
+            <script>
+                $(document).ready(function() {
+                    $('#runButton').click(function() {
+                        let runPromptContent = $('#runPromptContent').val();
+                        let runPromptVariables = $('#runPromptVariables').val();
+
+                        //input validation
+                        if (runPromptContent === "" || runPromptVariables === "") {
+                            alert("Please fill out all fields to run prompt");
+                            return;
+                        }
+
+                        //TODO Run prompt through OpenAI API
+                        //TODO Display the response in a new section
+                    });
+
+                    $('#copyButton').click(function() {
+                        let runPromptContent = $('#runPromptContent').text();
+                        let runPromptVariables = $('#runPromptVariables').text();
+
+                        //input validation
+                        if (runPromptContent === "" || runPromptVariables === "") {
+                            alert("Please fill out all fields to copy prompt");
+                            return;
+                        }
+
+                        //TODO Copy the prompt to the clipboard
+                        // Solution: https://www.buildwithphp.com/how-to-copy-text-to-clipboard-using-jquery
+                        let tempTextArea = $('<textarea>');
+                        $('body').append(tempTextArea);
+                        tempTextArea.val(runPromptContent).select();
+                        document.execCommand('copy');
+                        tempTextArea.remove();
+                    });
+
+                    $('#downloadButton').click(function() {
+                        let runPromptContent = $('#runPromptContent').val();
+                        let runPromptVariables = $('#runPromptVariables').val();
+
+                        //input validation
+                        if (runPromptContent === "" || runPromptVariables === "") {
+                            alert("Please fill out all fields to download prompt");
+                            return;
+                        }
+
+                        //TODO Download the prompt as a text file
+                    });
+                });
+
+
+            </script>
 
             <!-- Search for prompt by id -->
             <div class="container collapse" id="searchByIdSection">
