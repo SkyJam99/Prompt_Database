@@ -2,6 +2,8 @@ from supabase import create_client, Client
 from flask import jsonify
 from openai import OpenAI
 
+
+# TODO - remove this API key, delete it, and create an environment key
 client = OpenAI(
     api_key='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'
 )
