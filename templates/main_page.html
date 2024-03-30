@@ -26,7 +26,7 @@
                     </div>
                 </div>
             </div>
-            
+
             <!-- TODO Ideas for future features:
             [] Add a button for copying the prompt content to the clipboard
             [] Add a form for filling in prompt variables and getting final version
@@ -143,12 +143,12 @@
                     });
 
                     $('#copyButton').click(function() {
-                        let runPromptContent = $('#runPromptContent').text();
-                        let runPromptVariables = $('#runPromptVariables').text();
+                        let runPromptContent = $('#runPromptContent').val();
+                        let runPromptVariables = $('#runPromptVariables').val();
 
                         //input validation
                         if (runPromptContent === "" || runPromptVariables === "") {
-                            alert("Please fill out all fields to copy prompt");
+                            alert("Please fill out all fields to copy prompt:" + runPromptContent + "   " + runPromptVariables);
                             return;
                         }
 
@@ -159,6 +159,7 @@
                         tempTextArea.val(runPromptContent).select();
                         document.execCommand('copy');
                         tempTextArea.remove();
+                        alert("Prompt copied to clipboard")
                     });
 
                     $('#downloadButton').click(function() {
@@ -508,7 +509,7 @@
                 window.scrollTo(0, 0);
 
                 let id = $(this).data('id');
-                
+
                 let action = $(this).data('action');
                 if (action === 'delete') {
                     // Confirm that the user wants to delete the prompt
@@ -576,8 +577,8 @@
                     alert("Invalid action");
                 }
             });
-            
-            
+
+
             function jsonToHtmlTable(jsonData, tableHtml) {
 
                 //Set Custom order of headers (id, name, prompt_content, prompt_variables, designed_for, parent_prompt_id, created_at)
@@ -672,7 +673,7 @@
                 buttonTableHtml += "<td><button type='button' class='btn btn-primary btn-action' data-id='" + item.id + "' data-action='delete'>Delete</button></td>";
 
                 return buttonTableHtml;
-                
+
             }
 
 
