@@ -27,7 +27,8 @@ def get_completion(prompt):
 
     return completion.choices[0].message
 
-
+# TODO - this function works in the backend butdoes not work when being called by the flask app, likely due to the format that I'm passing the prompt in
+print(get_completion({"prompt": "What is the capital of United States"}))
 
 url: str = "https://nbbemlvtjsvhfgwjbdgx.supabase.co"
 key: str = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Im5iYmVtbHZ0anN2aGZnd2piZGd4Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3MDk5OTQ5NDMsImV4cCI6MjAyNTU3MDk0M30.0VYbbTNTEVmzM0ooAvLS09mbfAzsuk4GUEltvl6Y5AE"
