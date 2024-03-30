@@ -88,7 +88,7 @@
                 //More efficient function for hiding sections
                 function hideSections(sectionToShow) {
                     let sections = ['searchByIdSection', 'createPromptSection', 'deletePromptSection', 'updatePromptSection', 'runPromptSection'];
-                    sections.pop(sectionToShow);
+                    sections = sections.filter(section => section !== sectionToShow);
                     sections.forEach(section => {
                         if (section !== sectionToShow) {
                             $('#' + section).collapse('hide');
