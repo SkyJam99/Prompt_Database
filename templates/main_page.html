@@ -98,7 +98,7 @@
             </script>
 
 
-            
+
 
             <!-- Search for prompt by id -->
             <div class="container collapse" id="searchByIdSection">
@@ -514,7 +514,7 @@
                 let id = $(this).data('id');
 
                 let action = $(this).data('action');
-                
+
                 if (action === 'delete') {
                     // Confirm that the user wants to delete the prompt
                     if (!confirm("Are you sure you want to delete this prompt?")) {
@@ -599,7 +599,7 @@
                     });
                     return;
                 }
-                
+
                 else {
                     alert("Invalid action");
                 }
@@ -697,8 +697,8 @@
                 // Add buttons for inheriting, updating, deleting, and running prompts
                 let buttonTableHtml = "<td><button type='button' class='btn btn-primary btn-action' data-id='" + item.id + "' data-action='inherit'>Inherit</button>";
                 buttonTableHtml += "<button type='button' class='btn btn-primary btn-action' data-id='" + item.id + "' data-action='update'>Update</button>";
-                buttonTableHtml += "<button type='button' class='btn btn-primary btn-action' data-id='" + item.id + "' data-action='delete'>Delete</button></td>";
-                buttonTableHTML += "<button type='button' class='btn btn-primary btn-action' data-id='" + item.id + "' data-action='run'>Run</button></td>";
+                buttonTableHtml += "<button type='button' class='btn btn-primary btn-action' data-id='" + item.id + "' data-action='delete'>Delete</button>";
+                buttonTableHtml += "<button type='button' class='btn btn-primary btn-action' data-id='" + item.id + "' data-action='run'>Run</button></td>";
 
                 return buttonTableHtml;
 
