@@ -435,6 +435,10 @@
             <script>
                 $(document).ready(function() {
                     $('#runPromptContent').on('input', function() {
+                        createPromptVariableFields();
+                    });
+
+                    function createPromptVariableFields() {
                         // Remove existing variable fields
                         $('.prompt-variable-input').remove();
 
@@ -450,7 +454,7 @@
 
                              $(inputHtml).insertBefore('#runButton');
                         });
-                    });
+                    }
 
                     $('#runButton').click(function() {
                         let runPromptContent = $('#runPromptContent').val();
@@ -461,9 +465,13 @@
                             return acc;
                         }, {});
 
-                        Object.keys(variables).forEach(variable => {
-                            runPromptContent = runPromptContent.replace(new RegExp(`\\\{${variable}\\\}`, 'g'), variables[variable]);
-                        });
+                        // Only run this if there are variables in the prompt
+                        if (Object.keys(variables).length != 0) {
+                            Object.keys(variables).forEach(variable => {
+                                runPromptContent = runPromptContent.replace(new RegExp(`\\\{${variable}\\\}`, 'g'), variables[variable]);
+                            });
+                        }
+                        
 
                         //input validation
                         if (runPromptContent === "") {
@@ -669,7 +677,7 @@
                         success: function(data) {
                             console.log('Success:', data);
                             $('#runPromptContent').val(data[0].prompt_content);
-                            $('#runPromptVariables').val(data[0].prompt_variables);
+                            createPromptVariableFields();
                         },
                         error: function(xhr, status, error) {
                             $('#results').html("Issue getting prompt information to run. Error: " + error);
