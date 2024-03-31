@@ -416,6 +416,10 @@
                     <div class="col-sm">
                         <button type="button" class="btn btn-primary" id="downloadButton">Download</button>
                     </div>
+                    <!-- Completion response text box-->
+                    <div class="col-sm">
+                        <textarea class="form-control" id="completionResponse" name="completion_response" rows="5" placeholder="Completion response"></textarea>
+                    </div>
 
                 </div>
             </div>
@@ -444,6 +448,7 @@
                                 console.log('Success:', data);
                                 alert("Success!")
                                 //TODO Display the response in a new section
+                                $('#completionResponse').val(data[0].result);
                             },
                             error: function(xhr, status, error) {
                                 $('#results').html("Error: " + error);
