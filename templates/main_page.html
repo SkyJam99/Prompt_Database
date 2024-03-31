@@ -28,16 +28,15 @@
             </div>
 
             <!-- TODO Ideas for future features:
-            [] Clean up the formatting
+            [x] Clean up the formatting
             [x] Add a button for copying the prompt content to the clipboard
-            [] Add a form for filling in prompt variables and getting final version
-            [] Create database for storing sets of filled prompt variables to reuse
+            [x] Add a form for filling in prompt variables and getting final version
             [] Add a button for copying the final prompt to the clipboard
-            [] Add a button for downloading the final prompt as a text file
             [x] Add a button for sending the prompt to OpenAI API
-            [] Add a database for saving the final prompts and responses from OpenAI API
-            [] Add a button for copying the OpenAI API response to the clipboard
+            [x] Add a button for copying the OpenAI API response to the clipboard
             [] Add a button for downloading the OpenAI API response as a text file
+            [] Create database for storing sets of filled prompt variables to reuse
+            [] Add a database for saving the final prompts and responses from OpenAI API
             -->
 
             <!-- Buttons for showing and hiding each of the sections below (Search by ID, Create Prompt, Delete Prompt, Update Prompt, Run Prompt)-->
@@ -438,14 +437,20 @@
                         createPromptVariableFields();
                     });
 
+                    // Reference for this solution: https://shouts.dev/articles/add-or-remove-input-fields-dynamically-using-jquery
                     function createPromptVariableFields() {
                         // Remove existing variable fields
                         $('.prompt-variable-input').remove();
 
+                        // Get the variables from the prompt content
                         let promptContent = $('#runPromptContent').val();
+
+                        // Find variables in the prompt using regex
                         let variables = promptContent.match(/\{([^\}]+)\}/g);
 
+                        // Iterate over found variables and create input fields for them
                         variables.forEach(variable => {
+                            // Remove the curly braces
                             let variableName = variable.replace(/\{|\}/g, '');
                             let inputHtml = `<div class="col-12 prompt-variable-input">
                                 <label for="variable-${variableName}">${variableName}</label>
@@ -459,6 +464,7 @@
                     $('#runButton').click(function() {
                         let runPromptContent = $('#runPromptContent').val();
                         
+                        // Get the variable values from the input fields and put them in an array
                         let variables = $('.prompt-variable-input input').toArray().reduce((variableArray, input) => {
                             let variableName = input.id.replace('variable-', '');
                             variableArray[variableName] = $(input).val();
@@ -509,7 +515,27 @@
 
                     $('#copyPromptButton').click(function() {
                         let runPromptContent = $('#runPromptContent').val();
-                        let runPromptVariables = $('#runPromptVariables').val();
+                        
+                        // Get the variable values from the input fields and put them in an array
+                        let variables = $('.prompt-variable-input input').toArray().reduce((variableArray, input) => {
+                            let variableName = input.id.replace('variable-', '');
+                            variableArray[variableName] = $(input).val();
+
+                            //Check if the variables are filled in
+                            if (variableArray[variableName] === "") {
+                                alert("Please fill out all fields to copy prompt");
+                                return;
+                            }
+
+                            return variableArray;
+                        }, {});
+
+                        // Only run this if there are variables in the prompt
+                        if (Object.keys(variables).length != 0) {
+                            Object.keys(variables).forEach(variable => {
+                                runPromptContent = runPromptContent.replace(new RegExp(`\\\{${variable}\\\}`, 'g'), variables[variable]);
+                            });
+                        }
 
                         //input validation
                         if (runPromptContent === "") {
