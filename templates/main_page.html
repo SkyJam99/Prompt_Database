@@ -448,7 +448,7 @@
                                 console.log('Success:', data);
                                 alert("Success!")
                                 //TODO Display the response in a new section
-                                $('#completionResponse').val(data[0].result);
+                                $('#completionResponse').val(data.result);
                             },
                             error: function(xhr, status, error) {
                                 $('#results').html("Error: " + error);
