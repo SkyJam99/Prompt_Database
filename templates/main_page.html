@@ -485,6 +485,25 @@
                         alert("Prompt copied to clipboard")
                     });
 
+                    $('#copyResponseButton').click(function() {
+                        let completionResponse = $('#completionResponse').val();
+
+                        //input validation
+                        if (completionResponse === "") {
+                            alert("No Response to copy to clipboard");
+                            return;
+                        }
+
+                        // Copy the response to the clipboard
+                    
+                        let tempTextArea = $('<textarea>');
+                        $('body').append(tempTextArea);
+                        tempTextArea.val(completionResponse).select();
+                        document.execCommand('copy');
+                        tempTextArea.remove();
+                        alert("Response copied to clipboard")
+                    });
+
                     $('#downloadButton').click(function() {
                         let runPromptContent = $('#runPromptContent').val();
                         let runPromptVariables = $('#runPromptVariables').val();
