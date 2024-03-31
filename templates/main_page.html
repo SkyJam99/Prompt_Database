@@ -430,9 +430,25 @@
                             alert("Please fill out all fields to run prompt");
                             return;
                         }
+                        data = [{prompt: runPromptContent}]
+                        console.log(data)
 
-                        //TODO Run prompt through OpenAI API
-                        //TODO Display the response in a new section
+                        //Callin get /prompt/completion in the backend
+                        $.ajax({
+                            url: '/prompt/completion',
+                            type: 'GET',
+                            contentType: 'application/json',
+                            data: JSON.stringify(data),
+                            dataType: 'json',
+                            success: function(data) {
+                                console.log('Success:', data);
+                                
+                                //TODO Display the response in a new section
+                            },
+                            error: function(xhr, status, error) {
+                                $('#results').html("Error: " + error);
+                            }
+                        });
                     });
 
                     $('#copyButton').click(function() {
