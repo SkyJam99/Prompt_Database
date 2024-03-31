@@ -459,10 +459,17 @@
                     $('#runButton').click(function() {
                         let runPromptContent = $('#runPromptContent').val();
                         
-                        let variables = $('.prompt-variable-input input').toArray().reduce((acc, input) => {
+                        let variables = $('.prompt-variable-input input').toArray().reduce((variableArray, input) => {
                             let variableName = input.id.replace('variable-', '');
-                            acc[variableName] = $(input).val();
-                            return acc;
+                            variableArray[variableName] = $(input).val();
+
+                            //Check if the variables are filled in
+                            if (variableArray[variableName] === "") {
+                                alert("Please fill out all fields to run prompt");
+                                return;
+                            }
+
+                            return variableArray;
                         }, {});
 
                         // Only run this if there are variables in the prompt
@@ -678,6 +685,7 @@
                             console.log('Success:', data);
                             $('#runPromptContent').val(data[0].prompt_content);
                             createPromptVariableFields();
+                            $('#completionResponse').val("");
                         },
                         error: function(xhr, status, error) {
                             $('#results').html("Issue getting prompt information to run. Error: " + error);
