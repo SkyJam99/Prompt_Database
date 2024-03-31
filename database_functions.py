@@ -9,26 +9,26 @@ client = OpenAI(
 )
 
 # Backend funtion that takes a prompt and returns the completion
-# Prompt dict will look like this:
+# input will look like this:
 # [
 #     {
 #         "prompt": "What is the capital of United States"
 #     }
 # ]
 def get_completion(prompt):
-
+    print(prompt)
     completion = client.chat.completions.create(
         model="gpt-3.5-turbo",
         messages=[
             {"role": "system", "content": "You are a flexible assistant, helping the user with anything they ask for in a step by step way to ensure the best possible results."},
-            {"role": "user", "content": prompt["prompt"]}
+            {"role": "user", "content": prompt[0]["prompt"]}
         ]
     )
 
     return completion.choices[0].message
 
 # TODO - this function works in the backend butdoes not work when being called by the flask app, likely due to the format that I'm passing the prompt in
-print(get_completion({"prompt": "What is the capital of United States"}))
+print(get_completion([{"prompt": "What is the capital of United States"}]))
 
 url: str = "https://nbbemlvtjsvhfgwjbdgx.supabase.co"
 key: str = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Im5iYmVtbHZ0anN2aGZnd2piZGd4Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3MDk5OTQ5NDMsImV4cCI6MjAyNTU3MDk0M30.0VYbbTNTEVmzM0ooAvLS09mbfAzsuk4GUEltvl6Y5AE"
