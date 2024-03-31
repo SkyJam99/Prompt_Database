@@ -436,13 +436,13 @@
                         //Callin get /prompt/completion in the backend
                         $.ajax({
                             url: '/prompt/completion',
-                            type: 'GET',
+                            type: 'POST',
                             contentType: 'application/json',
                             data: JSON.stringify(data),
                             dataType: 'json',
                             success: function(data) {
                                 console.log('Success:', data);
-                                
+                                alert("Success!")
                                 //TODO Display the response in a new section
                             },
                             error: function(xhr, status, error) {

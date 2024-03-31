@@ -43,7 +43,7 @@ def prompt_id(id):
 #     return completion.choices[0].message
 
 #Get Prompt Completion
-@app.route('/prompt/completion', methods=["GET"])
+@app.route('/prompt/completion', methods=["POST"])
 def prompt_completion():
     prompt = request.json
     result = get_completion(prompt).content
