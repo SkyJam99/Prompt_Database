@@ -28,12 +28,13 @@
             </div>
 
             <!-- TODO Ideas for future features:
+            [] Clean up the formatting
             [x] Add a button for copying the prompt content to the clipboard
             [] Add a form for filling in prompt variables and getting final version
             [] Create database for storing sets of filled prompt variables to reuse
             [] Add a button for copying the final prompt to the clipboard
             [] Add a button for downloading the final prompt as a text file
-            [] Add a button for sending the final prompt to OpenAI API
+            [x] Add a button for sending the prompt to OpenAI API
             [] Add a database for saving the final prompts and responses from OpenAI API
             [] Add a button for copying the OpenAI API response to the clipboard
             [] Add a button for downloading the OpenAI API response as a text file
@@ -42,22 +43,21 @@
             <!-- Buttons for showing and hiding each of the sections below (Search by ID, Create Prompt, Delete Prompt, Update Prompt, Run Prompt)-->
 
             <div class="container">
-                <div class="row p-5">
-                    <div class="col-sm">
-                        <button class="btn btn-primary" type="button" data-bs-toggle="collapse" data-bs-target="#searchByIdSection" aria-expanded="false" aria-controls="searchById">Search by ID</button>
+                <div class="row py-4 justify-content-center">
+                    
+                    <div class="col-auto">
+                        <button class="btn btn-primary mx-1 my-2" type="button" data-bs-toggle="collapse" data-bs-target="#searchByIdSection" aria-expanded="false" aria-controls="searchById">Search by ID</button>
+
+                        <button class="btn btn-primary mx-1 my-2" type="button" data-bs-toggle="collapse" data-bs-target="#createPromptSection" aria-expanded="false" aria-controls="createPrompt">Create Prompt</button>
+
+                        <button class="btn btn-primary mx-1 my-2" type="button" data-bs-toggle="collapse" data-bs-target="#deletePromptSection" aria-expanded="false" aria-controls="deletePrompt">Delete Prompt</button>
+
+                        <button class="btn btn-primary mx-1 my-2" type="button" data-bs-toggle="collapse" data-bs-target="#updatePromptSection" aria-expanded="false" aria-controls="updatePrompt">Update Prompt</button>
+
+                        <button class="btn btn-primary mx-1 my-2" type="button" data-bs-toggle="collapse" data-bs-target="#runPromptSection" aria-expanded="false" aria-controls="runPrompt">Run Prompt</button>
                     </div>
-                    <div class="col-sm">
-                        <button class="btn btn-primary" type="button" data-bs-toggle="collapse" data-bs-target="#createPromptSection" aria-expanded="false" aria-controls="createPrompt">Create Prompt</button>
-                    </div>
-                    <div class="col-sm">
-                        <button class="btn btn-primary" type="button" data-bs-toggle="collapse" data-bs-target="#deletePromptSection" aria-expanded="false" aria-controls="deletePrompt">Delete Prompt</button>
-                    </div>
-                    <div class="col-sm">
-                        <button class="btn btn-primary" type="button" data-bs-toggle="collapse" data-bs-target="#updatePromptSection" aria-expanded="false" aria-controls="updatePrompt">Update Prompt</button>
-                    </div>
-                    <div class="col-sm">
-                        <button class="btn btn-primary" type="button" data-bs-toggle="collapse" data-bs-target="#runPromptSection" aria-expanded="false" aria-controls="runPrompt">Run Prompt</button>
-                    </div>
+                    
+                    
             </div>
 
             <!-- Script to hide the other sections when one section is shown -->
@@ -102,17 +102,19 @@
 
             <!-- Search for prompt by id -->
             <div class="container collapse" id="searchByIdSection">
-                <div class="row p-5">
+                <div class="row g-3">
 
-                    <div class="col-sm">
+                    <div class="col-md-6">
                         <label for="searchId">Search by ID</label>
                         <input type="text" class="form-control" id="searchId" name="search_id" placeholder="Enter ID">
                     </div>
+                </div>
+                <div class="row g-3">
 
                     <div class="col-sm">
-                        <button type="button" class="btn btn-primary" id="searchButton">Search</button>
+                        <button type="button" class="btn btn-primary my-2" id="searchButton">Search</button>
                     </div>
-
+                </div>
                 </div>
             </div>
 
@@ -155,35 +157,35 @@
             #}
             -->
             <div class="container collapse" id="createPromptSection">
-                <div class="row">
+                <div class="row g-3">
 
 
-                        <div class="col-sm">
+                        <div class="col-md-6">
                             <label for="name">Name</label>
                             <input type="text" class="form-control" id="name" name="name" placeholder="Enter name">
                         </div>
 
-                        <div class="col-sm">
-                            <label for="promptContent">Prompt Content</label>
-                            <textarea class="form-control" id="promptContent" name="prompt_content" rows="1" placeholder="Enter prompt content"></textarea>
-                        </div>
-
-                        <div class="col-sm">
+                        <div class="col-md-6">
                             <label for="promptVariables">Prompt Variables</label>
                             <input type="text" class="form-control" id="promptVariables" name="prompt_variables" placeholder="Enter prompt variables">
                         </div>
 
-                        <div class="col-sm">
+                        <div class="col-12">
+                            <label for="promptContent">Prompt Content</label>
+                            <textarea class="form-control" id="promptContent" name="prompt_content" rows="3" placeholder="Enter prompt content"></textarea>
+                        </div>
+
+                        <div class="col-md-6">
                             <label for="designedFor">Designed For</label>
                             <input type="text" class="form-control" id="designedFor" name="designed_for" placeholder="Enter designed for">
                         </div>
 
-                        <div class="col-sm">
+                        <div class="col-md-6">
                             <label for="parentPromptId">Parent Prompt ID</label>
                             <input type="text" class="form-control" id="parentPromptId" name="parent_prompt_id" placeholder="Enter parent prompt ID">
                         </div>
 
-                        <div class="col-sm">
+                        <div class="col-12">
                             <button type="button" class="btn btn-primary" id="createButton">Submit</button>
                         </div>
 
@@ -239,15 +241,17 @@
 
             <!-- Delete prompt by id -->
             <div class="container collapse" id="deletePromptSection">
-                <div class="row p-5">
+                <div class="row g-3">
 
-                    <div class="col-sm">
+                    <div class="col-md-6">
                         <label for="deleteId">Delete by ID</label>
                         <input type="text" class="form-control" id="deleteId" name="delete_id" placeholder="Enter ID">
                     </div>
+                </div>
+                <div class="row g-3">
 
                     <div class="col-sm">
-                        <button type="button" class="btn btn-primary" id="deleteButton">Delete</button>
+                        <button type="button" class="btn btn-primary my-2" id="deleteButton">Delete</button>
                     </div>
 
                 </div>
@@ -282,40 +286,40 @@
 
 
             <!-- Update prompt by id -->
-            <div class="container collapse" id="updatePromptSection">
-                <div class="row p-5">
+            <div class="container collapse mt-3" id="updatePromptSection">
+                <div class="row g-3">
 
-                    <div class="col-sm">
+                    <div class="col-md-6">
                         <label for="updateId">Update by ID</label>
                         <input type="text" class="form-control" id="updateId" name="update_id" placeholder="Enter ID">
                     </div>
 
-                    <div class="col-sm">
+                    <div class="col-md-6">
                         <label for="updateName">Name</label>
                         <input type="text" class="form-control" id="updateName" name="update_name" placeholder="Enter name">
                     </div>
 
-                    <div class="col-sm">
+                    <div class="col-12">
                         <label for="updatePromptContent">Prompt Content</label>
-                        <textarea class="form-control" id="updatePromptContent" name="update_prompt_content" rows="1" placeholder="Enter prompt content"></textarea>
+                        <textarea class="form-control" id="updatePromptContent" name="update_prompt_content" rows="3" placeholder="Enter prompt content"></textarea>
                     </div>
 
-                    <div class="col-sm">
+                    <div class="col-md-6">
                         <label for="updatePromptVariables">Prompt Variables</label>
                         <input type="text" class="form-control" id="updatePromptVariables" name="update_prompt_variables" placeholder="Enter prompt variables">
                     </div>
 
-                    <div class="col-sm">
+                    <div class="col-md-6">
                         <label for="updateDesignedFor">Designed For</label>
                         <input type="text" class="form-control" id="updateDesignedFor" name="update_designed_for" placeholder="Enter designed for">
                     </div>
 
-                    <div class="col-sm">
+                    <div class="col-md-6">
                         <label for="updateParentPromptId">Parent Prompt ID</label>
                         <input type="text" class="form-control" id="updateParentPromptId" name="update_parent_prompt_id" placeholder="Enter parent prompt ID">
                     </div>
 
-                    <div class="col-sm">
+                    <div class="col-12">
                         <button type="button" class="btn btn-primary" id="updateButton">Update</button>
                     </div>
 
@@ -392,34 +396,39 @@
 
 
             <!-- Run prompt section (copy to keyboard, run through openAI, or download text document with prompt)-->
-            <div class="container collapse" id="runPromptSection">
-                <div class="row p-5">
+            <div class="container collapse mt-3" id="runPromptSection">
+                <div class="row g-3">
 
-                    <div class="col-sm">
+                    <div class="col-12">
                         <label for="promptContent">Prompt Content</label>
-                        <textarea class="form-control" id="runPromptContent" name="run_prompt_content" rows="1" placeholder="Enter prompt content"></textarea>
+                        <textarea class="form-control" id="runPromptContent" name="run_prompt_content" rows="3" placeholder="Enter prompt content"></textarea>
                     </div>
 
-                    <div class="col-sm">
+                    <!-- TODO promptVariables forms will be added automatically if the content has variables in it 
+                    <div class="col-12">
                         <label for="promptVariables">Prompt Variables</label>
                         <input type="text" class="form-control" id="runPromptVariables" name="run_prompt_variables" placeholder="Enter prompt variables">
                     </div>
+                    -->
 
-                    <div class="col-sm">
+                    <div class="col-md-12">
                         <button type="button" class="btn btn-primary" id="runButton">Run</button>
+                        <button type="button" class="btn btn-primary" id="copyPromptButton">Copy Prompt</button>
                     </div>
 
-                    <div class="col-sm">
-                        <button type="button" class="btn btn-primary" id="copyButton">Copy</button>
+
+                    <div class="col-12">
+                        <textarea class="form-control" id="completionResponse" name="completion_response" rows="3" placeholder="Completion response"></textarea>
                     </div>
 
-                    <div class="col-sm">
+                    
+
+                    <div class="col-12">
                         <button type="button" class="btn btn-primary" id="downloadButton">Download</button>
+                        <button type="button" class="btn btn-primary" id="copyResponseButton">Copy Response</button>
                     </div>
-                    <!-- Completion response text box-->
-                    <div class="col-sm">
-                        <textarea class="form-control" id="completionResponse" name="completion_response" rows="5" placeholder="Completion response"></textarea>
-                    </div>
+                    
+                    
 
                 </div>
             </div>
@@ -456,7 +465,7 @@
                         });
                     });
 
-                    $('#copyButton').click(function() {
+                    $('#copyPromptButton').click(function() {
                         let runPromptContent = $('#runPromptContent').val();
                         let runPromptVariables = $('#runPromptVariables').val();
 
@@ -724,6 +733,8 @@
                 return buttonTableHtml;
 
             }
+
+            // 2 Functions that work in pair. The first one takes a prompt template as input, and returns a list of the variable
 
 
             function getAllPrompts() {
