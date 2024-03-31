@@ -46,9 +46,9 @@ def prompt_id(id):
 @app.route('/prompt/completion', methods=["GET"])
 def prompt_completion():
     prompt = request.json
-    result = get_completion(prompt)
+    result = get_completion(prompt).content
 
-    return jsonify(result)
+    return jsonify({"result": result})
 
 #Create Prompt
 @app.route('/prompt', methods=["POST"])
