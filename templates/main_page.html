@@ -449,7 +449,7 @@
                             let variableName = variable.replace(/\{|\}/g, '');
                             let inputHtml = `<div class="col-12 prompt-variable-input">
                                 <label for="variable-${variableName}">${variableName}</label>
-                                <input type="text" class="form-control" id="variable-${variableName}" name="variable_${variableName}" placeholder="Enter value for ${variableName}">
+                                <input type="text" class="form-control mb-2" id="variable-${variableName}" name="variable_${variableName}" placeholder="Enter value for ${variableName}">
                              </div>`;
 
                              $(inputHtml).insertBefore('#runButton');
@@ -822,6 +822,25 @@
             function refreshData() {
                 $('#results').html('')
                 getAllPrompts();
+            }
+
+            //Copying this function again for reuse
+            function createPromptVariableFields() {
+                // Remove existing variable fields
+                $('.prompt-variable-input').remove();
+
+                let promptContent = $('#runPromptContent').val();
+                let variables = promptContent.match(/\{([^\}]+)\}/g);
+
+                variables.forEach(variable => {
+                    let variableName = variable.replace(/\{|\}/g, '');
+                    let inputHtml = `<div class="col-12 prompt-variable-input">
+                        <label for="variable-${variableName}">${variableName}</label>
+                        <input type="text" class="form-control mb-2" id="variable-${variableName}" name="variable_${variableName}" placeholder="Enter value for ${variableName}">
+                        </div>`;
+
+                        $(inputHtml).insertBefore('#runButton');
+                });
             }
         </script>
     </body>
