@@ -434,12 +434,39 @@
             </div>
             <script>
                 $(document).ready(function() {
+                    $('#runPromptContent').on('input', function() {
+                        // Remove existing variable fields
+                        $('.prompt-variable-input').remove();
+
+                        let promptContent = $('#runPromptContent').val();
+                        let variables = promptContent.match(/\{([^\}]+)\}/g);
+
+                        variables.forEach(variable => {
+                            let variableName = variable.replace(/\{|\}/g, '');
+                            let inputHtml = `<div class="col-12 prompt-variable-input">
+                                <label for="variable-${variableName}">${variableName}</label>
+                                <input type="text" class="form-control" id="variable-${variableName}" name="variable_${variableName}" placeholder="Enter value for ${variableName}">
+                             </div>`;
+
+                             $(inputHtml).insertBefore('#runButton');
+                        });
+                    });
+
                     $('#runButton').click(function() {
                         let runPromptContent = $('#runPromptContent').val();
-                        let runPromptVariables = $('#runPromptVariables').val();
+                        
+                        let variables = $('.prompt-variable-input input').toArray().reduce((acc, input) => {
+                            let variableName = input.id.replace('variable-', '');
+                            acc[variableName] = $(input).val();
+                            return acc;
+                        }, {});
+
+                        Object.keys(variables).forEach(variable => {
+                            runPromptContent = runPromptContent.replace(new RegExp(`\\\{${variable}\\\}`, 'g'), variables[variable]);
+                        });
 
                         //input validation
-                        if (runPromptContent === "" || runPromptVariables === "") {
+                        if (runPromptContent === "") {
                             alert("Please fill out all fields to run prompt");
                             return;
                         }
@@ -504,6 +531,8 @@
                         alert("Response copied to clipboard")
                     });
 
+
+                    // TODO make this work
                     $('#downloadButton').click(function() {
                         let runPromptContent = $('#runPromptContent').val();
                         let runPromptVariables = $('#runPromptVariables').val();
