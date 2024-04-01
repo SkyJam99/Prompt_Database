@@ -35,6 +35,10 @@
             [x] Add a button for copying the final prompt to the clipboard
             [x] Add a button for sending the prompt to OpenAI API
             [x] Add a button for copying the OpenAI API response to the clipboard
+            [] Frontend input validation for all forms
+            [] Backend input validation?
+            [] Change the default font
+            [] Make the buttons in the table the same size
             [] Add a button for downloading the OpenAI API response as a text file
             [] Create database for storing sets of filled prompt variables to reuse
             [] Add a database for saving the final prompts and responses from OpenAI API
@@ -621,8 +625,6 @@
             </script>
 
             <!-- Display all prompts in a table -->
-            <!-- TODO Clean up this section and fix the issue where long prompts extend out the table-->
-
             <div class="container">
                 <div class="row p-2">
                     <div class="col-sm">
@@ -632,12 +634,17 @@
                         <input type="checkbox" id="simplifiedTable" name="simplified_table" value="simplified_table">
                         <label for="simplifiedTable">Simplified Table</label>
 
+                    </div>
+
+                </div>
+                <div class="row p-1">
+                    <div class="col-sm">
+                        <h4>Results</h4>
                         <div id='results'>
                             <!-- Results will be displayed here -->
                             
                         </div>
                     </div>
-
                 </div>
             </div>
 
