@@ -186,6 +186,7 @@
 
                         <div class="col-12">
                             <button type="button" class="btn btn-primary" id="createButton">Submit</button>
+                            <button type="button" class="btn btn-primary" id="clearCreateForm">Clear</button>
                         </div>
 
 
@@ -235,6 +236,15 @@
                             }
                         });
                     });
+
+                    // Clear the form fields
+                    $('#clearCreateForm').click(function() {
+                        $('#name').val("");
+                        $('#promptContent').val("");
+                        $('#promptVariables').val("");
+                        $('#designedFor').val("");
+                        $('#parentPromptId').val("");
+                    });
                 });
             </script>
 
@@ -274,6 +284,7 @@
                                 console.log('Success:', data);
                                 alert('Prompt deleted successfully');
                                 refreshData();
+                                $('#deleteId').val("");
                             },
                             error: function(xhr, status, error) {
                                 $('#results').html("Error: " + error);
@@ -320,6 +331,7 @@
 
                     <div class="col-12">
                         <button type="button" class="btn btn-primary" id="updateButton">Update</button>
+                        <button type="button" class="btn btn-primary" id="clearUpdateForm">Clear</button>
                     </div>
 
                 </div>
@@ -387,6 +399,16 @@
                             }
                         });
                     });
+
+                    // Clear the form fields
+                    $('#clearUpdateForm').click(function() {
+                        $('#updateId').val("");
+                        $('#updateName').val("");
+                        $('#updatePromptContent').val("");
+                        $('#updatePromptVariables').val("");
+                        $('#updateDesignedFor').val("");
+                        $('#updateParentPromptId').val("");
+                    });
                 });
 
 
@@ -426,6 +448,7 @@
                         <!-- Download Button disabled currently -->
                         <!-- <button type="button" class="btn btn-primary" id="downloadButton">Download</button> -->
                         <button type="button" class="btn btn-primary" id="copyResponseButton">Copy Response</button>
+                        <button type="button" class="btn btn-primary" id="clearRunForm">Clear</button>
                     </div>
                     
                     
@@ -573,6 +596,11 @@
                         alert("Response copied to clipboard")
                     });
 
+                    $('#clearRunForm').click(function() {
+                        $('#runPromptContent').val("");
+                        $('#completionResponse').val("");
+                        $('.prompt-variable-input').remove();
+                    });
 
                     // Download the response from openAI as a text file (currently disabled)
                     // $('#downloadButton').click(function() {
@@ -605,7 +633,7 @@
 
                         <div id='results'>
                             <!-- Results will be displayed here -->
-                            <button type='button' class='btn btn-primary btn-action' data-id='1'>Inherit</button>
+                            
                         </div>
                     </div>
 
@@ -815,16 +843,14 @@
             // Function to add buttons to the table (mostly to clean up code repitition)
             function addButtonsToTable(item) {
                 // Add buttons for inheriting, updating, deleting, and running prompts
-                let buttonTableHtml = "<td><button type='button' class='btn btn-primary btn-action' data-id='" + item.id + "' data-action='inherit'>Inherit</button>";
-                buttonTableHtml += "<button type='button' class='btn btn-primary btn-action' data-id='" + item.id + "' data-action='update'>Update</button>";
-                buttonTableHtml += "<button type='button' class='btn btn-primary btn-action' data-id='" + item.id + "' data-action='delete'>Delete</button>";
-                buttonTableHtml += "<button type='button' class='btn btn-primary btn-action' data-id='" + item.id + "' data-action='run'>Run</button></td>";
+                let buttonTableHtml = "<td><button type='button' class='btn btn-primary btn-action m-1' data-id='" + item.id + "' data-action='inherit'>Inherit</button>";
+                buttonTableHtml += "<button type='button' class='btn btn-primary btn-action m-1' data-id='" + item.id + "' data-action='update'>Update</button>";
+                buttonTableHtml += "<button type='button' class='btn btn-primary btn-action m-1' data-id='" + item.id + "' data-action='delete'>Delete</button>";
+                buttonTableHtml += "<button type='button' class='btn btn-primary btn-action m-1' data-id='" + item.id + "' data-action='run'>Run</button></td>";
 
                 return buttonTableHtml;
 
             }
-
-            // 2 Functions that work in pair. The first one takes a prompt template as input, and returns a list of the variable
 
 
             function getAllPrompts() {
