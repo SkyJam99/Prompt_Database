@@ -35,7 +35,7 @@
             [x] Add a button for copying the final prompt to the clipboard
             [x] Add a button for sending the prompt to OpenAI API
             [x] Add a button for copying the OpenAI API response to the clipboard
-            [] Frontend input validation for all forms
+            [x] Frontend input validation for all forms
             [] Backend input validation?
             [] Change the default font
             [] Make the buttons in the table the same size
@@ -208,6 +208,37 @@
                         let formDesignedFor = $('#designedFor').val();
                         let formParentPromptId = $('#parentPromptId').val();
 
+                        // Check if formName is at least 3 characters long and less than 200 characters
+                        if (formName.length < 3 || formName.length > 200) {
+                            alert("Please enter a name that is at least 3 characters long and less than 200 characters long");
+                            return;
+                        }
+
+                        // Check if formPromptContent is at least 5 characters long and less than 5000 characters
+                        if (formPromptContent.length < 5 || formPromptContent.length > 5000) {
+                            alert("Please enter prompt content that is at least 5 characters long and less than 5000 characters long");
+                            return;
+                        }
+
+                        // Check if formPromptVariables is at least 1 character long and less than 500 characters
+                        if (formPromptVariables.length < 1 || formPromptVariables.length > 500) {
+                            alert("Please enter prompt variables that are at least 1 character long and less than 500 characters long");
+                            return;
+                        }
+
+                        // Check if formDesignedFor is at least 1 character long and less than 100 characters
+                        if (formDesignedFor.length < 1 || formDesignedFor.length > 100) {
+                            alert("Please enter designed for that is at least 1 character long and less than 100 characters long");
+                            return;
+                        }
+
+                        // If the parent prompt id is not empty, check if it is a number between 1 and 999999
+                        if (formParentPromptId !== "" && !/^[1-9]\d{0,5}$/.test(formParentPromptId)) {
+                            alert("Please enter a valid parent prompt ID (1-999999)");
+                            return;
+                        }
+
+                        // Check if any of the fields are empty
                         if (formName === "" || formPromptContent === "" || formPromptVariables === "" || formDesignedFor === "") {
                             alert("Please fill out all fields to create prompt");
                             return;
@@ -368,25 +399,44 @@
                             parent_prompt_id: updateParentPromptId
                         };
 
+                        // Check if the fields are empty or null, and delete them from the form data if they are
+                        // Check if the fields are the correct length
                         if (updateName === "") {
                             delete formData.name;
+                        } else if (updateName.length < 3 || updateName.length > 200) {
+                            alert("Please enter a name that is at least 3 characters long and less than 200 characters long");
+                            return;
                         }
 
                         if (updatePromptContent === "") {
                             delete formData.prompt_content;
+                        } else if (updatePromptContent.length < 5 || updatePromptContent.length > 5000) {
+                            alert("Please enter prompt content that is at least 5 characters long and less than 5000 characters long");
+                            return;
                         }
 
                         if (updatePromptVariables === "") {
                             delete formData.prompt_variables;
+                        } else if (updatePromptVariables.length < 1 || updatePromptVariables.length > 500) {
+                            alert("Please enter prompt variables that are at least 1 character long and less than 500 characters long");
+                            return;
                         }
 
                         if (updateDesignedFor === "") {
                             delete formData.designed_for;
+                        } else if (updateDesignedFor.length < 1 || updateDesignedFor.length > 100) {
+                            alert("Please enter designed for that is at least 1 character long and less than 100 characters long");
+                            return;
                         }
 
                         if (updateParentPromptId === "") {
                             delete formData.parent_prompt_id;
+                        } else if (!/^[1-9]\d{0,5}$/.test(updateParentPromptId)) {
+                            alert("Please enter a valid parent prompt ID (1-999999)");
+                            return;
                         }
+
+                        
 
                         $.ajax({
                             url: '/prompt/' + updateId,
@@ -498,9 +548,12 @@
                             let variableName = input.id.replace('variable-', '');
                             variableArray[variableName] = $(input).val();
 
-                            //Check if the variables are filled in
+                            //Check if the variables are filled in and are less than 1000 characters
                             if (variableArray[variableName] === "") {
                                 alert("Please fill out all fields to run prompt");
+                                return;
+                            } else if (variableArray[variableName].length > 5000) {
+                                alert("Please enter a value that is less than 5000 characters long");
                                 return;
                             }
 
@@ -510,6 +563,7 @@
                         // Only run this if there are variables in the prompt
                         if (Object.keys(variables).length != 0) {
                             Object.keys(variables).forEach(variable => {
+                                // Replace the variables in the prompt content with the values from the input fields
                                 runPromptContent = runPromptContent.replace(new RegExp(`\\\{${variable}\\\}`, 'g'), variables[variable]);
                             });
                         }
@@ -518,6 +572,9 @@
                         //input validation
                         if (runPromptContent === "") {
                             alert("Please fill out all fields to run prompt");
+                            return;
+                        } else if (runPromptContent.length > 9000) {
+                            alert("Please enter a prompt that is less than 9000 characters long");
                             return;
                         }
                         data = [{prompt: runPromptContent}]
@@ -554,6 +611,9 @@
                             if (variableArray[variableName] === "") {
                                 alert("Please fill out all fields to copy prompt");
                                 return;
+                            } else if (variableArray[variableName].length > 10000) {
+                                alert("Please enter a value that is less than 10000 characters long");
+                                return;
                             }
 
                             return variableArray;
@@ -562,6 +622,7 @@
                         // Only run this if there are variables in the prompt
                         if (Object.keys(variables).length != 0) {
                             Object.keys(variables).forEach(variable => {
+                                // Replace the variables in the prompt content with the values from the input fields
                                 runPromptContent = runPromptContent.replace(new RegExp(`\\\{${variable}\\\}`, 'g'), variables[variable]);
                             });
                         }
@@ -569,6 +630,9 @@
                         //input validation
                         if (runPromptContent === "") {
                             alert("Please fill out all fields to copy prompt:" + runPromptContent + "   " + runPromptVariables);
+                            return;
+                        } else if (runPromptContent.length > 20000) {
+                            alert("Please enter a prompt that is less than 20000 characters long");
                             return;
                         }
 
