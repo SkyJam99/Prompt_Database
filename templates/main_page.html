@@ -8,12 +8,22 @@
         <meta name="viewport" content="width=device-width, initial-scale=1">
 		<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous">
         <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p" crossorigin="anonymous"></script>
-
+        <link href="https://fonts.googleapis.com/css2?family=Lato:wght@400;700&display=swap" rel="stylesheet">
         <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
         <script src="https://code.jquery.com/jquery-3.7.0.js"></script>
 
     </head>
-
+    <style>
+        body {
+            font-family: 'Lato', sans-serif;
+        }
+        .btn-action {
+            width: 60px;
+            height: 30px;
+            text-align: center;
+            padding: 0;
+        }
+    </style>
     <body>
         <div class="bg-dark text-light">
             <div class="container-fluid text-center">
@@ -21,9 +31,6 @@
                     <div class="col-sm-12">
                         <hr>
                         <h1>Prompt Database</h1>
-
-
-
                     </div>
                 </div>
             </div>
@@ -36,9 +43,9 @@
             [x] Add a button for sending the prompt to OpenAI API
             [x] Add a button for copying the OpenAI API response to the clipboard
             [x] Frontend input validation for all forms
-            [] Backend input validation?
-            [] Change the default font
-            [] Make the buttons in the table the same size
+            [] Backend input validation? Not sure what I would check.. maybe check for code injection?
+            [x] Change the default font
+            [x] Make the buttons in the table the same size
             [] Add a button for downloading the OpenAI API response as a text file
             [] Create database for storing sets of filled prompt variables to reuse
             [] Add a database for saving the final prompts and responses from OpenAI API
@@ -48,7 +55,7 @@
 
             <div class="container">
                 <div class="row py-2 justify-content-center">
-                    
+
                     <div class="col-auto">
                         <button class="btn btn-primary mx-1 my-2" type="button" data-bs-toggle="collapse" data-bs-target="#searchByIdSection" aria-expanded="false" aria-controls="searchById">Search by ID</button>
 
@@ -60,8 +67,8 @@
 
                         <button class="btn btn-primary mx-1 my-2" type="button" data-bs-toggle="collapse" data-bs-target="#runPromptSection" aria-expanded="false" aria-controls="runPrompt">Run Prompt</button>
                     </div>
-                    
-                    
+
+
             </div>
             <hr>
             <!-- Script to hide the other sections when one section is shown -->
@@ -436,7 +443,7 @@
                             return;
                         }
 
-                        
+
 
                         $.ajax({
                             url: '/prompt/' + updateId,
@@ -480,7 +487,7 @@
                         <textarea class="form-control" id="runPromptContent" name="run_prompt_content" rows="3" placeholder="Enter prompt content"></textarea>
                     </div>
 
-                    <!-- TODO promptVariables forms will be added automatically if the content has variables in it 
+                    <!-- TODO promptVariables forms will be added automatically if the content has variables in it
                     <div class="col-12">
                         <label for="promptVariables">Prompt Variables</label>
                         <input type="text" class="form-control" id="runPromptVariables" name="run_prompt_variables" placeholder="Enter prompt variables">
@@ -497,7 +504,7 @@
                         <textarea class="form-control" id="completionResponse" name="completion_response" rows="3" placeholder="Completion response"></textarea>
                     </div>
 
-                    
+
 
                     <div class="col-12">
                         <!-- Download Button disabled currently -->
@@ -505,8 +512,8 @@
                         <button type="button" class="btn btn-primary" id="copyResponseButton">Copy Response</button>
                         <button type="button" class="btn btn-primary" id="clearRunForm">Clear</button>
                     </div>
-                    
-                    
+
+
 
                 </div>
             </div>
@@ -542,7 +549,7 @@
 
                     $('#runButton').click(function() {
                         let runPromptContent = $('#runPromptContent').val();
-                        
+
                         // Get the variable values from the input fields and put them in an array
                         let variables = $('.prompt-variable-input input').toArray().reduce((variableArray, input) => {
                             let variableName = input.id.replace('variable-', '');
@@ -567,7 +574,7 @@
                                 runPromptContent = runPromptContent.replace(new RegExp(`\\\{${variable}\\\}`, 'g'), variables[variable]);
                             });
                         }
-                        
+
 
                         //input validation
                         if (runPromptContent === "") {
@@ -601,7 +608,7 @@
 
                     $('#copyPromptButton').click(function() {
                         let runPromptContent = $('#runPromptContent').val();
-                        
+
                         // Get the variable values from the input fields and put them in an array
                         let variables = $('.prompt-variable-input input').toArray().reduce((variableArray, input) => {
                             let variableName = input.id.replace('variable-', '');
@@ -656,7 +663,7 @@
                         }
 
                         // Copy the response to the clipboard
-                    
+
                         let tempTextArea = $('<textarea>');
                         $('body').append(tempTextArea);
                         tempTextArea.val(completionResponse).select();
@@ -707,7 +714,7 @@
                         <h4>Results</h4>
                         <div id='results'>
                             <!-- Results will be displayed here -->
-                            
+
                         </div>
                     </div>
                 </div>
