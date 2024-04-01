@@ -624,7 +624,7 @@
 
             <div class="container">
                 <div class="row p-5">
-                    <div class="col-sm">
+                    <div class="col-12">
                         <button id="refreshData" class="btn btn-info">Refresh Prompts</button>
 
                         <!--Checkbox for simplified table, clean up this code later-->
@@ -843,10 +843,10 @@
             // Function to add buttons to the table (mostly to clean up code repitition)
             function addButtonsToTable(item) {
                 // Add buttons for inheriting, updating, deleting, and running prompts
-                let buttonTableHtml = "<td><button type='button' class='btn btn-primary btn-action m-1' data-id='" + item.id + "' data-action='inherit'>Inherit</button>";
-                buttonTableHtml += "<button type='button' class='btn btn-primary btn-action m-1' data-id='" + item.id + "' data-action='update'>Update</button>";
-                buttonTableHtml += "<button type='button' class='btn btn-primary btn-action m-1' data-id='" + item.id + "' data-action='delete'>Delete</button>";
-                buttonTableHtml += "<button type='button' class='btn btn-primary btn-action m-1' data-id='" + item.id + "' data-action='run'>Run</button></td>";
+                let buttonTableHtml = "<td><button type='button' class='btn btn-primary btn-action mb-1 ml-1' data-id='" + item.id + "' data-action='inherit'>Inherit</button>";
+                buttonTableHtml += "<button type='button' class='btn btn-primary btn-action mb-1 ml-1' data-id='" + item.id + "' data-action='update'>Update</button>";
+                buttonTableHtml += "<button type='button' class='btn btn-primary btn-action mb-1 ml-1' data-id='" + item.id + "' data-action='delete'>Delete</button>";
+                buttonTableHtml += "<button type='button' class='btn btn-primary btn-action mb-1 ml-1' data-id='" + item.id + "' data-action='run'>Run</button></td>";
 
                 return buttonTableHtml;
 
