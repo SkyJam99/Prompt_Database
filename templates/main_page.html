@@ -159,7 +159,7 @@
                                 console.log('Success:', data);
                                 // Add error handling for successful responses that looks like ('Error: No data found ()', 400)
                                 if (data[1]==400) {
-                                    $('#results').html(data[0]);
+                                    $('#results').html(data[0] + " Check that the id is valid");
                                     return;
                                 }
                                 let promptHtml = jsonToHtmlRouter(data);
@@ -187,7 +187,7 @@
                                 console.log('Success:', data);
                                 // Add error handling for successful responses that looks like ('Error: No data found ()', 400)
                                 if (data[1]==400) {
-                                    $('#results').html(data[0]);
+                                    $('#results').html(data[0] + " Check that the name is valid");
                                     return;
                                 }
                                 let promptHtml = jsonToHtmlRouter(data);
@@ -377,7 +377,7 @@
                                 console.log('Success:', data);
                                 // Add error handling for successful responses that looks like ('Error: No data found ()', 400)
                                 if (data[1]==400) {
-                                    $('#results').html(data[0]);
+                                    $('#results').html(data[0] + " Check that the id is valid");
                                     return;
                                 }
                                 alert('Prompt deleted successfully');
@@ -510,7 +510,7 @@
                                 console.log('Success:', data);
                                 // Add error handling for successful responses that looks like ('Error: No data found ()', 400)
                                 if (data[1]==400) {
-                                    $('#results').html(data[0]);
+                                    $('#results').html(data[0] + " Check that the ids are valid");
                                     return;
                                 }
                                 alert('Prompt updated successfully');
@@ -594,6 +594,11 @@
                         // Find variables in the prompt using regex
                         let variables = promptContent.match(/\{([^\}]+)\}/g);
 
+                        // If no variables are found, return
+                        if (variables === null) {
+                            return;
+                        }
+
                         // Iterate over found variables and create input fields for them
                         variables.forEach(variable => {
                             // Remove the curly braces
@@ -615,7 +620,7 @@
                             let variableName = input.id.replace('variable-', '');
                             variableArray[variableName] = $(input).val();
 
-                            //Check if the variables are filled in and are less than 1000 characters
+                            //Check if the variables are filled in and are less than 5000 characters
                             if (variableArray[variableName] === "") {
                                 alert("Please fill out all fields to run prompt");
                                 return;
