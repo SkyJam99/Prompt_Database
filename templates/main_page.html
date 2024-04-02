@@ -158,7 +158,7 @@
                             success: function(data) {
                                 console.log('Success:', data);
                                 // Add error handling for successful responses that looks like ('Error: No data found ()', 400)
-                                if (data[0].includes("Error: No data found")) {
+                                if (data[1]==400) {
                                     $('#results').html(data[0]);
                                     return;
                                 }
@@ -186,7 +186,7 @@
                             success: function(data) {
                                 console.log('Success:', data);
                                 // Add error handling for successful responses that looks like ('Error: No data found ()', 400)
-                                if (data[0].includes("Error: No data found")) {
+                                if (data[1]==400) {
                                     $('#results').html(data[0]);
                                     return;
                                 }
@@ -317,7 +317,7 @@
                             success: function(data) {
                                 console.log('Success:', data);
                                 // Add error handling for successful responses that looks like ('Error: No data found ()', 400)
-                                if (data[0].includes("Error: No data found")) {
+                                if (data[1]==400) {
                                     $('#results').html("Check that parent prompt id is valid. " + data[0]);
                                     return;
                                 }
@@ -376,7 +376,7 @@
                             success: function(data) {
                                 console.log('Success:', data);
                                 // Add error handling for successful responses that looks like ('Error: No data found ()', 400)
-                                if (data[0].includes("Error: No data found")) {
+                                if (data[1]==400) {
                                     $('#results').html(data[0]);
                                     return;
                                 }
@@ -509,7 +509,7 @@
                             success: function(data) {
                                 console.log('Success:', data);
                                 // Add error handling for successful responses that looks like ('Error: No data found ()', 400)
-                                if (data[0].includes("Error: No data found")) {
+                                if (data[1]==400) {
                                     $('#results').html(data[0]);
                                     return;
                                 }
@@ -657,7 +657,7 @@
                             success: function(data) {
                                 console.log('Success:', data);
                                 // Add error handling for successful responses that looks like ('Error: No data found ()', 400)
-                                if (data[0].includes("Error: No data found")) {
+                                if (data[1]==400) {
                                     $('#results').html(data[0]);
                                     return;
                                 }
@@ -819,7 +819,7 @@
                         success: function(data) {
                             console.log('Success:', data);
                             // Add error handling for successful responses that looks like ('Error: No data found ()', 400)
-                            if (data[0].includes("Error: No data found")) {
+                            if (data[1]==400) {
                                 $('#results').html(data[0]);
                                 return;
                             }
