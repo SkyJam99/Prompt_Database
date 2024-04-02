@@ -27,8 +27,6 @@ def get_completion(prompt):
 
     return completion.choices[0].message
 
-# TODO - this function works in the backend butdoes not work when being called by the flask app, likely due to the format that I'm passing the prompt in
-print(get_completion([{"prompt": "What is the capital of United States"}]))
 
 url: str = "https://nbbemlvtjsvhfgwjbdgx.supabase.co"
 key: str = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Im5iYmVtbHZ0anN2aGZnd2piZGd4Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3MDk5OTQ5NDMsImV4cCI6MjAyNTU3MDk0M30.0VYbbTNTEVmzM0ooAvLS09mbfAzsuk4GUEltvl6Y5AE"
@@ -115,6 +113,18 @@ def get_prompt_by_id_db(id: int):
     #return response_to_html(response)
     return response.data
 
+#Get Prompt by name (check for name substring)
+def get_prompt_by_name_db(name: str):
+    getConnection()
+    response = supabase.table('prompts').select("*").ilike('name', f'%{name}%').execute()
+
+    if not response.data:
+        return "Error: No data found (GET BY NAME)", 400
+
+    #return response_to_html(response)
+    return response.data
+
+
 
 #Create Prompt
 def create_prompt_db(prompt: dict):
@@ -162,6 +172,7 @@ def delete_prompt_db(id):
 #Test the functions
 # print(get_all_prompts())
 # print(get_prompt_by_id(8))
+# print(get_prompt_by_name_db("Chain"))
 # print(create_prompt({
 #     "name": "Test Prompt",
 #     "prompt_content": "This is a test prompt",

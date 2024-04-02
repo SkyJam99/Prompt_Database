@@ -1,5 +1,5 @@
 from flask import Flask, redirect, render_template, request, url_for, jsonify
-from database_functions import get_all_prompts_db, get_prompt_by_id_db, create_prompt_db, update_prompt_db, delete_prompt_db, get_completion
+from database_functions import get_all_prompts_db, get_prompt_by_id_db, create_prompt_db, get_prompt_by_name_db, update_prompt_db, delete_prompt_db, get_completion
 app = Flask(__name__)
 
 
@@ -28,6 +28,14 @@ def prompt():
 @app.route('/prompt/<int:id>', methods=["GET"])
 def prompt_id(id):
     result = get_prompt_by_id_db(id)
+
+    return jsonify(result)
+
+#Get Prompt by name
+#
+@app.route('/prompt/name/<string:name>', methods=["GET"])
+def prompt_name(name):
+    result = get_prompt_by_name_db(name)
 
     return jsonify(result)
 
