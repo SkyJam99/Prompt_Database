@@ -57,7 +57,7 @@
                 <div class="row py-2 justify-content-center">
 
                     <div class="col-auto">
-                        <button class="btn btn-primary mx-1 my-2" type="button" data-bs-toggle="collapse" data-bs-target="#searchByIdSection" aria-expanded="false" aria-controls="searchById">Search by ID</button>
+                        <button class="btn btn-primary mx-1 my-2" type="button" data-bs-toggle="collapse" data-bs-target="#searchByIdSection" aria-expanded="false" aria-controls="searchById">Search</button>
 
                         <button class="btn btn-primary mx-1 my-2" type="button" data-bs-toggle="collapse" data-bs-target="#createPromptSection" aria-expanded="false" aria-controls="createPrompt">Create Prompt</button>
 
@@ -69,63 +69,74 @@
                     </div>
 
 
-            </div>
-            <hr>
-            <!-- Script to hide the other sections when one section is shown -->
-            <script>
-                //To add another section, add the name to the document ready function and the hideSections function
-                $(document).ready(function() {
-                    $('#searchByIdSection').on('show.bs.collapse', function() {
-                        hideSections('searchByIdSection');
-                    });
-
-                    $('#createPromptSection').on('show.bs.collapse', function() {
-                        hideSections('createPromptSection');
-                    });
-
-                    $('#deletePromptSection').on('show.bs.collapse', function() {
-                        hideSections('deletePromptSection');
-                    });
-
-                    $('#updatePromptSection').on('show.bs.collapse', function() {
-                        hideSections('updatePromptSection');
-                    });
-
-                    $('#runPromptSection').on('show.bs.collapse', function() {
-                        hideSections('runPromptSection');
-                    });
-                });
-
-                //More efficient function for hiding sections
-                function hideSections(sectionToShow) {
-                    let sections = ['searchByIdSection', 'createPromptSection', 'deletePromptSection', 'updatePromptSection', 'runPromptSection'];
-                    sections = sections.filter(section => section !== sectionToShow);
-                    sections.forEach(section => {
-                        if (section !== sectionToShow) {
-                            $('#' + section).collapse('hide');
-                        }
-                    });
-                }
-            </script>
-
-
-
-
-            <!-- Search for prompt by id -->
-            <div class="container collapse" id="searchByIdSection">
-                <div class="row g-3">
-
-                    <div class="col-md-6">
-                        <label for="searchId">Search by ID</label>
-                        <input type="text" class="form-control" id="searchId" name="search_id" placeholder="Enter ID">
-                    </div>
                 </div>
-                <div class="row g-3">
+                <hr>
+                <!-- Script to hide the other sections when one section is shown -->
+                <script>
+                    //To add another section, add the name to the document ready function and the hideSections function
+                    $(document).ready(function() {
+                        $('#searchByIdSection').on('show.bs.collapse', function() {
+                            hideSections('searchByIdSection');
+                        });
 
-                    <div class="col-sm">
-                        <button type="button" class="btn btn-primary my-2" id="searchButton">Search</button>
+                        $('#createPromptSection').on('show.bs.collapse', function() {
+                            hideSections('createPromptSection');
+                        });
+
+                        $('#deletePromptSection').on('show.bs.collapse', function() {
+                            hideSections('deletePromptSection');
+                        });
+
+                        $('#updatePromptSection').on('show.bs.collapse', function() {
+                            hideSections('updatePromptSection');
+                        });
+
+                        $('#runPromptSection').on('show.bs.collapse', function() {
+                            hideSections('runPromptSection');
+                        });
+                    });
+
+                    //More efficient function for hiding sections
+                    function hideSections(sectionToShow) {
+                        let sections = ['searchByIdSection', 'createPromptSection', 'deletePromptSection', 'updatePromptSection', 'runPromptSection'];
+                        sections = sections.filter(section => section !== sectionToShow);
+                        sections.forEach(section => {
+                            if (section !== sectionToShow) {
+                                $('#' + section).collapse('hide');
+                            }
+                        });
+                    }
+                </script>
+
+
+
+
+                <!-- Search for prompt by id or name -->
+                <div class="container collapse" id="searchByIdSection">
+                    <!-- Search by id -->
+                    <div class="row g-3">
+                        <div class="col-md-6">
+                            <label for="searchId">Search by ID</label>
+                            <input type="text" class="form-control" id="searchId" name="search_id" placeholder="Enter ID">
+                        </div>
                     </div>
-                </div>
+                    <div class="row g-3">
+                        <div class="col-sm">
+                            <button type="button" class="btn btn-primary my-2" id="searchButton">Search by ID</button>
+                        </div>
+                    </div>
+                    <!-- Search by name -->
+                    <div class="row g-3">
+                        <div class="col-md-6">
+                            <label for="searchName">Search by Name</label>
+                            <input type="text" class="form-control" id="searchName" name="search_name" placeholder="Enter Name">
+                        </div>
+                    </div>
+                    <div class="row g-3">
+                        <div class="col-sm">
+                            <button type="button" class="btn btn-primary my-2" id="searchNameButton">Search by Name</button>
+                        </div>
+                    </div>
                 </div>
             </div>
 
@@ -142,6 +153,29 @@
 
                         $.ajax({
                             url: '/prompt/' + searchId,
+                            type: 'GET',
+                            success: function(data) {
+                                console.log('Success:', data);
+                                let promptHtml = jsonToHtmlRouter(data);
+                                $('#results').html(promptHtml);
+                            },
+                            error: function(xhr, status, error) {
+                                $('#results').html("Error: " + error);
+                            }
+                        });
+                    });
+
+                    $('#searchNameButton').click(function() {
+                        let searchName = $('#searchName').val();
+
+                        //input validation using regex (name can be any string between 3 and 200 characters)
+                        if (searchName.length < 3 || searchName.length > 200) {
+                            alert("Please enter a valid name (3-200 characters)");
+                            return;
+                        }
+
+                        $.ajax({
+                            url: '/prompt/name/' + searchName,
                             type: 'GET',
                             success: function(data) {
                                 console.log('Success:', data);
