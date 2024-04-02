@@ -316,6 +316,11 @@
                             dataType: 'json',
                             success: function(data) {
                                 console.log('Success:', data);
+                                // Add error handling for successful responses that looks like ('Error: No data found ()', 400)
+                                if (data[1] == 400) {
+                                    $('#results').html(data[0]);
+                                    return;
+                                }
                                 alert('Prompt added successfully');
                                 refreshData();
                             },
@@ -370,6 +375,11 @@
                             type: 'DELETE',
                             success: function(data) {
                                 console.log('Success:', data);
+                                // Add error handling for successful responses that looks like ('Error: No data found ()', 400)
+                                if (data[1] == 400) {
+                                    $('#results').html(data[0]);
+                                    return;
+                                }
                                 alert('Prompt deleted successfully');
                                 refreshData();
                                 $('#deleteId').val("");
@@ -498,6 +508,11 @@
                             dataType: 'json',
                             success: function(data) {
                                 console.log('Success:', data);
+                                // Add error handling for successful responses that looks like ('Error: No data found ()', 400)
+                                if (data[1] == 400) {
+                                    $('#results').html(data[0]);
+                                    return;
+                                }
                                 alert('Prompt updated successfully');
                                 refreshData();
                             },
@@ -641,6 +656,11 @@
                             dataType: 'json',
                             success: function(data) {
                                 console.log('Success:', data);
+                                // Add error handling for successful responses that looks like ('Error: No data found ()', 400)
+                                if (data[1] == 400) {
+                                    $('#results').html(data[0]);
+                                    return;
+                                }
                                 alert("Success!")
                                 //TODO Display the response in a new section
                                 $('#completionResponse').val(data.result);
@@ -798,6 +818,11 @@
                         type: 'DELETE',
                         success: function(data) {
                             console.log('Success:', data);
+                            // Add error handling for successful responses that looks like ('Error: No data found ()', 400)
+                            if (data[1] == 400) {
+                                    $('#results').html(data[0]);
+                                    return;
+                                }
                             alert('Prompt deleted successfully');
                             refreshData();
                         },
