@@ -46,6 +46,7 @@
             [] Backend input validation? Not sure what I would check.. maybe check for code injection?
             [x] Change the default font
             [x] Make the buttons in the table the same size
+            [] Add error handling for successful responses that looks like ('Error: No data found (GET BY NAME)', 400)
             [] Add a button for downloading the OpenAI API response as a text file
             [] Create database for storing sets of filled prompt variables to reuse
             [] Add a database for saving the final prompts and responses from OpenAI API
@@ -156,6 +157,11 @@
                             type: 'GET',
                             success: function(data) {
                                 console.log('Success:', data);
+                                // Add error handling for successful responses that looks like ('Error: No data found ()', 400)
+                                if (data[1] == 400) {
+                                    $('#results').html(data[0]);
+                                    return;
+                                }
                                 let promptHtml = jsonToHtmlRouter(data);
                                 $('#results').html(promptHtml);
                             },
@@ -179,6 +185,11 @@
                             type: 'GET',
                             success: function(data) {
                                 console.log('Success:', data);
+                                // Add error handling for successful responses that looks like ('Error: No data found ()', 400)
+                                if (data[1] == 400) {
+                                    $('#results').html(data[0]);
+                                    return;
+                                }
                                 let promptHtml = jsonToHtmlRouter(data);
                                 $('#results').html(promptHtml);
                             },
