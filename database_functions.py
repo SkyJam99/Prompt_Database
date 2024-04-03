@@ -3,7 +3,6 @@ from flask import jsonify
 from openai import OpenAI
 from openaikey import openaikey
 
-# TODO - remove this API key, delete it, and create an environment key
 client = OpenAI(
     api_key=openaikey
 )
@@ -41,31 +40,18 @@ def getConnection():
     supabase: Client = create_client(url, key)
     return supabase
 
-# getConnection()
-# response = supabase.table('prompts').select("*").execute()
-
-# def readPrompt():
-#     # Check if data is present in the response
-#     if not response.data:  # Simplified error handling
-#         print(response)
-#         return None
-
-#     # Construct HTML table from response data
-#     html_output = table_format  # Start the table and add headers
-
-#     # Add column headers based on the first item keys if there's data
-#     if response.data:
-#         html_output += '<tr>' + ''.join([f'<th>{col.capitalize()}</th>' for col in response.data[0].keys()]) + '</tr>'
-
-#         # Fill the table rows with the data
-#         for item in response.data:
-#             html_output += '<tr>' + ''.join([f'<td>{item[col]}</td>' for col in item.keys()]) + '</tr>'
-
-#     html_output += "</table>"  # Close the table
-#     print(html_output)  # Print the HTML table
-
-#readPrompt()
     
+
+#prompt JSON format
+# {
+#     "id": int,
+#     "name": string,
+#     "prompt_content": string,
+#     "prompt_variables": string,
+#     "designed_for": string,
+#     "parent_prompt_id": int
+#}
+
 #Response to HTML function
 def response_to_html(response):
     # Check if data is present in the response
@@ -159,15 +145,6 @@ def delete_prompt_db(id):
     #return response_to_html(response)
     return response.data
 
-#prompt JSON format
-# {
-#     "id": int,
-#     "name": string,
-#     "prompt_content": string,
-#     "prompt_variables": string,
-#     "designed_for": string,
-#     "parent_prompt_id": int
-#}
 
 #Test the functions
 # print(get_all_prompts())
